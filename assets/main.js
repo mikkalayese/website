@@ -35,14 +35,19 @@ const NEWSLETTER_ENDPOINT = "";
     revealEls.forEach((el) => el.classList.add("is-in"));
   }
 
-  // "How I work" progress line follows scroll
-  const steps = document.querySelector("[data-steps]");
-  if (steps) {
+  // "How I work" flow: the active node advances as you scroll through it
+  const flow = document.querySelector("[data-flow]");
+  if (flow) {
+    const nodes = [...flow.children];
     const update = () => {
-      const r = steps.getBoundingClientRect();
+      const r = flow.getBoundingClientRect();
       const vh = window.innerHeight;
-      const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (vh * 0.6)));
-      steps.style.setProperty("--progress", (p * 100).toFixed(1) + "%");
+      const p = Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.6)));
+      const active = Math.min(nodes.length - 1, Math.floor(p * nodes.length));
+      nodes.forEach((li, i) => {
+        li.classList.toggle("is-active", i === active);
+        li.classList.toggle("is-done", i < active);
+      });
     };
     update();
     window.addEventListener("scroll", update, { passive: true });

@@ -7,74 +7,88 @@
   <meta name="description" content="One real experiment a week on marketing, AI and systems, for founders and marketers who'd rather figure it out themselves than wait on an expert.">
   <meta property="og:title" content="Become dangerously resourceful — Mikka">
   <meta property="og:description" content="One experiment a week. Zero guru fluff.">
+  <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
 
-  <!-- ============ NAV ============ -->
+  <!-- ============ FLOATING PILL NAV ============ -->
   <header class="nav" id="nav">
-    <div class="container nav__inner">
-      <a href="index.html" class="nav__logo" aria-label="Mikka, home">mikka<span class="dot">.</span></a>
-      <nav class="nav__links" aria-label="Main">
-        <a href="#experiments">Experiments</a>
-        <a href="#how">How I work</a>
-        <a href="#about">About</a>
-        <a href="work-with-me.html" class="nav__quiet">Work with me</a>
-      </nav>
-      <a href="#subscribe" class="btn btn--sm btn--dark nav__cta">Subscribe</a>
-    </div>
+    <a href="index.html" class="nav__avatar" aria-label="Mikka, home">
+      <!-- Replace with: <img src="assets/avatar.jpg" alt=""> -->
+      <span aria-hidden="true">M</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#experiments">Experiments</a>
+      <a href="#how">How I work</a>
+      <a href="#about">About</a>
+      <a href="work-with-me.html" class="nav__quiet">Work with me</a>
+    </nav>
+    <a href="#subscribe" class="btn btn--contact">Subscribe</a>
   </header>
 
   <main>
 
-    <!-- ============ HERO ============ -->
+    <!-- ============ HERO (100vh) ============ -->
     <section class="hero" id="top">
-      <div class="container">
-        <p class="eyebrow hero__eyebrow reveal-up">
-          <span class="pulse" aria-hidden="true"></span>
-          Work-Life Hacking · a weekly newsletter
-        </p>
+      <div class="container hero__grid">
 
-        <h1 class="hero__title" aria-label="Become dangerously resourceful.">
-          <span class="line"><span class="line__inner">Become <em>dangerously</em></span></span>
-          <span class="line"><span class="line__inner">resourceful.</span></span>
-        </h1>
+        <div class="hero__copy">
+          <p class="label hero__label reveal-up">
+            <span class="status-dot" aria-hidden="true"></span>
+            Work-Life Hacking · a weekly newsletter
+          </p>
 
-        <div class="hero__grid">
-          <div class="hero__copy reveal-up" style="--d: .55s">
-            <p class="lead">
-              I'm Mikka. I figure out how marketing, AI and systems work, test them on real problems, and share what actually worked.
-              One experiment a week, for people who'd rather figure it out themselves than wait on an expert.
-            </p>
+          <h1 class="hero__title" aria-label="Become dangerously resourceful.">
+            <span class="line"><span class="line__inner">Become</span></span>
+            <span class="line"><span class="line__inner"><span class="mark-wrap">dangerously<svg class="mark" viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" vector-effect="non-scaling-stroke" d="M3 8 C 60 3, 120 10, 180 6 S 270 5, 297 7"/></svg></span></span></span>
+            <span class="line"><span class="line__inner">resourceful.</span></span>
+          </h1>
 
-            <form class="signup" data-signup novalidate>
-              <label class="sr-only" for="hero-email">Your email</label>
-              <input id="hero-email" type="email" name="email" placeholder="Your email" autocomplete="email" required>
-              <button type="submit" class="btn btn--accent">Get the weekly experiment</button>
-              <p class="signup__msg" role="status" aria-live="polite"></p>
-            </form>
-            <p class="micro">Free. One email a week. Unsubscribe anytime.</p>
-            <!-- Later, once the number is worth showing: <p class="micro">Join [X] founders and marketers.</p> -->
-            <a href="#experiments" class="link-arrow">Or read past experiments <span aria-hidden="true">↓</span></a>
-          </div>
+          <p class="lead hero__lead reveal-up" style="--d:.5s">
+            I'm Mikka. I figure out how marketing, AI and systems work, test them on real problems, and share what actually worked.
+            One experiment a week, for people who'd rather figure it out themselves than wait on an expert.
+          </p>
 
-          <div class="hero__media reveal-up" style="--d: .75s">
-            <div class="media media--video" data-label="Hero video · you, mid-experiment">
-              <!-- Replace with: <video src="assets/hero.mp4" autoplay muted loop playsinline></video> -->
-              <div class="media__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <form class="signup hero__form reveal-up" style="--d:.6s" data-signup novalidate>
+            <label class="field-label" for="hero-email">Your email</label>
+            <div class="signup__row">
+              <input id="hero-email" type="email" name="email" placeholder="name@company.com" autocomplete="email" required>
+              <button type="submit" class="btn btn--primary">Get the weekly experiment</button>
             </div>
-            <div class="chip chip--float chip--a">Problem → Figure it out</div>
-            <div class="chip chip--float chip--b">Build a system → Share it</div>
-          </div>
+            <p class="signup__msg" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="hero__foot reveal-up" style="--d:.7s">
+            <span class="micro">Free. One email a week. Unsubscribe anytime.</span>
+            <!-- Later, once the number is worth showing: "Join [X] founders and marketers" -->
+            <a href="#experiments" class="link">Or read past experiments <span aria-hidden="true">↓</span></a>
+          </p>
         </div>
+
+        <div class="hero__media reveal-up" style="--d:.45s">
+          <div class="portrait" data-label="Portrait cut-out · transparent PNG">
+            <!-- Replace with: <img src="assets/mikka-cutout.png" alt="Mikka wearing blue heart sunglasses"> -->
+            <p class="note-hand" aria-hidden="true">
+              Problem → Figure it out
+              <svg viewBox="0 0 70 60" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4 C 8 34, 30 48, 58 48"/><path d="M46 38 L 58 48 L 45 56"/></svg>
+            </p>
+          </div>
+          <!-- Placeholder glyph: swap for Mikka's own wave-hand asset -->
+          <div class="wave" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="#fff"><rect x="12" y="20" width="24" height="20" rx="10"/><rect x="12" y="8" width="5" height="18" rx="2.5" transform="rotate(-10 14 17)"/><rect x="19" y="4" width="5" height="20" rx="2.5"/><rect x="26" y="5" width="5" height="19" rx="2.5"/><rect x="33" y="9" width="5" height="16" rx="2.5" transform="rotate(10 35 17)"/><rect x="4" y="24" width="5" height="14" rx="2.5" transform="rotate(-50 6 31)"/></svg>
+          </div>
+          <span class="pill-night"><i aria-hidden="true"></i>Build a system → Share it</span>
+        </div>
+
       </div>
     </section>
 
-    <!-- ============ MARQUEE ============ -->
+    <!-- ============ PILLAR MARQUEE ============ -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
         <span>Work Hacking</span><i>✦</i><span>Skill Hacking</span><i>✦</i><span>Leverage Hacking</span><i>✦</i><span>Life Hacking</span><i>✦</i>
@@ -86,115 +100,119 @@
     <section class="section" id="who">
       <div class="container">
         <div class="section__head reveal">
-          <p class="eyebrow">01 — Who it's for</p>
-          <h2 class="h2">For people who know they <em>should</em> be able to do this themselves.</h2>
+          <p class="label">01 / Who it's for</p>
+          <h2 class="display-l">For people who know they <span class="hl">should</span> be able to do this themselves.</h2>
         </div>
 
         <div class="cards-2">
-          <article class="card reveal">
+          <article class="card card--raised reveal">
             <div class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
             </div>
-            <h3 class="h3">Founders &amp; small-business owners</h3>
+            <h3 class="display-m">Founders &amp; small-business owners</h3>
             <p>You know you should be able to do your own marketing, but you don't have the time or a clear path.</p>
           </article>
-          <article class="card reveal" style="--d:.1s">
+          <article class="card card--raised reveal" style="--d:.1s">
             <div class="card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </div>
-            <h3 class="h3">Early-career marketers</h3>
+            <h3 class="display-m">Early-career marketers</h3>
             <p>You're trying to become useful fast, without burning out.</p>
           </article>
         </div>
 
         <blockquote class="statement reveal">
           You don't need to know everything.<br>
-          You need to know how to <em>figure things out.</em>
+          You need to know how to <span class="hl">figure things out.</span>
         </blockquote>
       </div>
     </section>
 
     <!-- ============ WHAT YOU GET ============ -->
-    <section class="section section--tint" id="get">
+    <section class="section section--raised" id="get">
       <div class="container get">
         <div class="get__copy reveal">
-          <p class="eyebrow">02 — What you get each week</p>
-          <h2 class="h2">One real experiment, <em>written up properly.</em></h2>
+          <p class="label">02 / What you get each week</p>
+          <h2 class="display-l">One real experiment, <span class="hl">written up properly.</span></h2>
           <p class="lead">
             I take a problem I actually had, work out the simplest way to solve it, and send you the whole thing.
           </p>
-          <p class="note">No "5 frameworks you should know." Just what I tried and what happened.</p>
+          <p class="muted">No "5 frameworks you should know." Just what I tried and what happened.</p>
         </div>
 
         <div class="issue reveal" style="--d:.1s">
           <div class="issue__bar">
-            <span></span><span></span><span></span>
-            <p>Experiment #[N] · Inbox</p>
+            <span class="status-dot" aria-hidden="true"></span>
+            <p class="label">Experiment #[N] · Inbox</p>
           </div>
           <ol class="issue__list">
-            <li><span class="issue__n">01</span><div><strong>The problem</strong><p>In two lines.</p></div></li>
-            <li><span class="issue__n">02</span><div><strong>How I figured it out</strong><p>Including what I didn't know and what I skipped.</p></div></li>
-            <li><span class="issue__n">03</span><div><strong>A template or checklist</strong><p>You can steal it.</p></div></li>
-            <li><span class="issue__n">04</span><div><strong>The result</strong><p>Real numbers, or an honest "it half worked."</p></div></li>
-            <li><span class="issue__n">05</span><div><strong>One takeaway</strong><p>Something you can reuse.</p></div></li>
+            <li><span class="label issue__n">01</span><div><strong>The problem</strong><p>In two lines.</p></div></li>
+            <li><span class="label issue__n">02</span><div><strong>How I figured it out</strong><p>Including what I didn't know and what I skipped.</p></div></li>
+            <li><span class="label issue__n">03</span><div><strong>A template or checklist</strong><p>You can steal it.</p></div></li>
+            <li><span class="label issue__n">04</span><div><strong>The result</strong><p>Real numbers, or an honest "it half worked."</p></div></li>
+            <li><span class="label issue__n">05</span><div><strong>One takeaway</strong><p>Something you can reuse.</p></div></li>
           </ol>
         </div>
       </div>
     </section>
 
-    <!-- ============ SIGNUP (mid-page) ============ -->
+    <!-- ============ SIGNUP (mid-page, sunshine band) ============ -->
     <section class="cta" id="subscribe">
       <div class="container cta__inner reveal">
-        <p class="eyebrow eyebrow--light">The newsletter</p>
-        <h2 class="cta__title">One experiment a week.<br><em>Zero guru fluff.</em></h2>
-        <p class="cta__sub">After a few issues, you should be thinking: <em>this is simpler than I thought, and I don't need to know everything.</em></p>
-        <form class="signup signup--light" data-signup novalidate>
-          <label class="sr-only" for="mid-email">Your email</label>
-          <input id="mid-email" type="email" name="email" placeholder="Your email" autocomplete="email" required>
-          <button type="submit" class="btn btn--accent">Send me the next experiment</button>
+        <p class="label label--on-sunshine">The newsletter</p>
+        <h2 class="display-xl cta__title">One experiment a week.<br>Zero guru fluff.</h2>
+        <p class="lead cta__sub">After a few issues, you should be thinking: <strong>this is simpler than I thought, and I don't need to know everything.</strong></p>
+        <form class="signup signup--center" data-signup novalidate>
+          <label class="field-label" for="mid-email">Your email</label>
+          <div class="signup__row">
+            <input id="mid-email" type="email" name="email" placeholder="name@company.com" autocomplete="email" required>
+            <button type="submit" class="btn btn--primary">Send me the next experiment</button>
+          </div>
           <p class="signup__msg" role="status" aria-live="polite"></p>
         </form>
         <!-- TODO: replace with your LinkedIn newsletter URL -->
-        <a class="micro micro--light link-quiet" href="https://www.linkedin.com/" target="_blank" rel="noopener">Prefer LinkedIn? Subscribe there instead.</a>
+        <a class="micro micro--link" href="https://www.linkedin.com/" target="_blank" rel="noopener">Prefer LinkedIn? Subscribe there instead.</a>
       </div>
     </section>
 
-    <!-- ============ HOW I WORK ============ -->
+    <!-- ============ HOW I WORK (night panel) ============ -->
     <section class="section" id="how">
       <div class="container">
         <div class="section__head reveal">
-          <p class="eyebrow">03 — How I work</p>
-          <h2 class="h2">80% of expert-level results, <em>without becoming an expert in everything.</em></h2>
+          <p class="label">03 / How I work</p>
+          <h2 class="display-l">80% of expert-level results, <span class="hl">without becoming an expert in everything.</span></h2>
         </div>
 
-        <ol class="steps" data-steps>
-          <li class="step reveal"><span class="step__n">01</span><span class="step__t">Learn</span></li>
-          <li class="step reveal" style="--d:.06s"><span class="step__n">02</span><span class="step__t">Think</span></li>
-          <li class="step reveal" style="--d:.12s"><span class="step__n">03</span><span class="step__t">Simplify</span></li>
-          <li class="step reveal" style="--d:.18s"><span class="step__n">04</span><span class="step__t">Find leverage</span></li>
-          <li class="step reveal" style="--d:.24s"><span class="step__n">05</span><span class="step__t">Build a system</span></li>
-          <li class="step reveal" style="--d:.30s"><span class="step__n">06</span><span class="step__t">Make it happen</span></li>
-        </ol>
+        <div class="night reveal">
+          <ol class="flow" data-flow>
+            <li class="is-active"><span class="node">01</span><span class="flow__t">Learn</span></li>
+            <li><span class="node">02</span><span class="flow__t">Think</span></li>
+            <li><span class="node">03</span><span class="flow__t">Simplify</span></li>
+            <li><span class="node">04</span><span class="flow__t">Find leverage</span></li>
+            <li><span class="node">05</span><span class="flow__t">Build a system</span></li>
+            <li><span class="node">06</span><span class="flow__t">Make it happen</span></li>
+          </ol>
 
-        <div class="how__foot reveal">
-          <p class="lead">
-            I'm not the best marketer, engineer or researcher. I'm good at getting to 80% of expert-level results without becoming an expert in everything, then showing you the path.
-          </p>
-          <div class="meter" aria-hidden="true">
-            <div class="meter__bar"><span data-meter></span></div>
-            <div class="meter__labels"><span>“I have no idea how to do this”</span><span>“I figured it out”</span></div>
+          <div class="night__foot">
+            <p class="night__lead">
+              I'm not the best marketer, engineer or researcher. I'm good at getting to 80% of expert-level results without becoming an expert in everything, then showing you the path.
+            </p>
+            <div class="meter" aria-hidden="true">
+              <div class="meter__bar"><span data-meter></span></div>
+              <div class="meter__labels"><span>“I have no idea how to do this”</span><span>“I figured it out”</span></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============ EXPERIMENTS ============ -->
-    <section class="section section--tint" id="experiments">
+    <section class="section section--raised" id="experiments">
       <div class="container">
         <div class="section__head section__head--row reveal">
           <div>
-            <p class="eyebrow">04 — Experiments</p>
-            <h2 class="h2">Real problems, <em>real messy paths.</em></h2>
+            <p class="label">04 / Experiments</p>
+            <h2 class="display-l">Real problems, <span class="hl">real messy paths.</span></h2>
           </div>
           <p class="section__aside">Client details are generalized. The lessons aren't.</p>
         </div>
@@ -211,12 +229,13 @@
 
           <!-- Experiment 1 — rewritten from existing project -->
           <article class="exp reveal" data-pillar="leverage">
-            <div class="media media--card" data-label="Video / image · 4:3">
+            <div class="media" data-label="Video / image · 4:3">
               <div class="media__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             </div>
             <div class="exp__body">
-              <p class="exp__meta"><span class="tag tag--leverage">Leverage Hacking</span> · <span class="ph">[X]</span>-minute read</p>
-              <h3 class="exp__title">I wanted a blockchain dev agency's client acquisition to stop being ad hoc. So I built a two-track growth system.</h3>
+              <p class="exp__meta"><span class="chip">Leverage Hacking</span><span class="muted"><span class="ph">[X]</span>-minute read</span></p>
+              <h3 class="display-m exp__title">I wanted a blockchain dev agency's client acquisition to stop being ad hoc. <span class="hl">So I built a two-track growth system.</span></h3>
+              <ul class="story" aria-label="Story format"><li>Problem</li><li>Figure it out</li><li>System</li><li>Test</li><li>Share</li></ul>
               <details class="exp__details">
                 <summary>Read the experiment <span class="plus" aria-hidden="true"></span></summary>
                 <dl class="exp__dl">
@@ -224,21 +243,22 @@
                   <dt>What I wanted</dt><dd>A repeatable way to get clients without depending on the founder's network.</dd>
                   <dt>How I figured it out</dt><dd><span class="ph">[REAL PATH: what you didn't know, what you tried first]</span></dd>
                   <dt>The system</dt><dd><span class="ph">[REAL STEPS: the two tracks]</span></dd>
-                  <dt>Result</dt><dd><span class="ph">[REAL RESULT: leads or meetings, before → after, timeframe]</span></dd>
                   <dt>Takeaway</dt><dd><span class="ph">[One transferable principle]</span></dd>
                 </dl>
+                <div class="result"><p class="label">Result</p><p class="result__text"><span class="ph">[REAL RESULT: leads or meetings, before → after, timeframe]</span></p></div>
               </details>
             </div>
           </article>
 
           <!-- Experiment 2 — TODO: rewrite project #2 -->
           <article class="exp reveal" data-pillar="work">
-            <div class="media media--card" data-label="Video / image · 4:3">
+            <div class="media" data-label="Video / image · 4:3">
               <div class="media__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             </div>
             <div class="exp__body">
-              <p class="exp__meta"><span class="tag tag--work">Work Hacking</span> · <span class="ph">[X]</span>-minute read</p>
-              <h3 class="exp__title">I wanted <span class="ph">[outcome for project #2]</span>. So I <span class="ph">[what you built or changed]</span>.</h3>
+              <p class="exp__meta"><span class="chip">Work Hacking</span><span class="muted"><span class="ph">[X]</span>-minute read</span></p>
+              <h3 class="display-m exp__title">I wanted <span class="ph">[outcome for project #2]</span>. <span class="hl">So I <span class="ph">[what you built or changed]</span>.</span></h3>
+              <ul class="story" aria-label="Story format"><li>Problem</li><li>Figure it out</li><li>System</li><li>Test</li><li>Share</li></ul>
               <details class="exp__details">
                 <summary>Read the experiment <span class="plus" aria-hidden="true"></span></summary>
                 <dl class="exp__dl">
@@ -246,21 +266,22 @@
                   <dt>What I wanted</dt><dd><span class="ph">[The outcome, in one line]</span></dd>
                   <dt>How I figured it out</dt><dd><span class="ph">[REAL PATH]</span></dd>
                   <dt>The system</dt><dd><span class="ph">[REAL STEPS]</span></dd>
-                  <dt>Result</dt><dd><span class="ph">[REAL RESULT: before → after, timeframe]</span></dd>
                   <dt>Takeaway</dt><dd><span class="ph">[One transferable principle]</span></dd>
                 </dl>
+                <div class="result"><p class="label">Result</p><p class="result__text"><span class="ph">[REAL RESULT: before → after, timeframe]</span></p></div>
               </details>
             </div>
           </article>
 
           <!-- Experiment 3 — TODO: rewrite project #3 -->
           <article class="exp reveal" data-pillar="skill">
-            <div class="media media--card" data-label="Video / image · 4:3">
+            <div class="media" data-label="Video / image · 4:3">
               <div class="media__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             </div>
             <div class="exp__body">
-              <p class="exp__meta"><span class="tag tag--skill">Skill Hacking</span> · <span class="ph">[X]</span>-minute read</p>
-              <h3 class="exp__title">I needed to <span class="ph">[skill for project #3]</span>. So I learned just enough to <span class="ph">[result]</span>.</h3>
+              <p class="exp__meta"><span class="chip">Skill Hacking</span><span class="muted"><span class="ph">[X]</span>-minute read</span></p>
+              <h3 class="display-m exp__title">I needed to <span class="ph">[skill for project #3]</span>. <span class="hl">So I learned just enough to <span class="ph">[result]</span>.</span></h3>
+              <ul class="story" aria-label="Story format"><li>Problem</li><li>Figure it out</li><li>System</li><li>Test</li><li>Share</li></ul>
               <details class="exp__details">
                 <summary>Read the experiment <span class="plus" aria-hidden="true"></span></summary>
                 <dl class="exp__dl">
@@ -268,21 +289,22 @@
                   <dt>What I wanted</dt><dd><span class="ph">[The outcome, in one line]</span></dd>
                   <dt>How I figured it out</dt><dd><span class="ph">[REAL PATH]</span></dd>
                   <dt>The system</dt><dd><span class="ph">[REAL STEPS]</span></dd>
-                  <dt>Result</dt><dd><span class="ph">[REAL RESULT: before → after, timeframe]</span></dd>
                   <dt>Takeaway</dt><dd><span class="ph">[One transferable principle]</span></dd>
                 </dl>
+                <div class="result"><p class="label">Result</p><p class="result__text"><span class="ph">[REAL RESULT: before → after, timeframe]</span></p></div>
               </details>
             </div>
           </article>
 
           <!-- Experiment 4 — TODO: rewrite project #4 -->
           <article class="exp reveal" data-pillar="life">
-            <div class="media media--card" data-label="Video / image · 4:3">
+            <div class="media" data-label="Video / image · 4:3">
               <div class="media__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             </div>
             <div class="exp__body">
-              <p class="exp__meta"><span class="tag tag--life">Life Hacking</span> · <span class="ph">[X]</span>-minute read</p>
-              <h3 class="exp__title">I wanted <span class="ph">[outcome for project #4]</span>. So I <span class="ph">[what you built or changed]</span>.</h3>
+              <p class="exp__meta"><span class="chip">Life Hacking</span><span class="muted"><span class="ph">[X]</span>-minute read</span></p>
+              <h3 class="display-m exp__title">I wanted <span class="ph">[outcome for project #4]</span>. <span class="hl">So I <span class="ph">[what you built or changed]</span>.</span></h3>
+              <ul class="story" aria-label="Story format"><li>Problem</li><li>Figure it out</li><li>System</li><li>Test</li><li>Share</li></ul>
               <details class="exp__details">
                 <summary>Read the experiment <span class="plus" aria-hidden="true"></span></summary>
                 <dl class="exp__dl">
@@ -290,9 +312,9 @@
                   <dt>What I wanted</dt><dd><span class="ph">[The outcome, in one line]</span></dd>
                   <dt>How I figured it out</dt><dd><span class="ph">[REAL PATH]</span></dd>
                   <dt>The system</dt><dd><span class="ph">[REAL STEPS]</span></dd>
-                  <dt>Result</dt><dd><span class="ph">[REAL RESULT: before → after, timeframe]</span></dd>
                   <dt>Takeaway</dt><dd><span class="ph">[One transferable principle]</span></dd>
                 </dl>
+                <div class="result"><p class="label">Result</p><p class="result__text"><span class="ph">[REAL RESULT: before → after, timeframe]</span></p></div>
               </details>
             </div>
           </article>
@@ -301,11 +323,13 @@
 
         <!-- Second signup, under the last card -->
         <div class="inline-signup reveal">
-          <p class="inline-signup__title">Get one of these in your inbox every week.</p>
+          <p class="inline-signup__title display-m">Get one of these in your inbox every week.</p>
           <form class="signup" data-signup novalidate>
-            <label class="sr-only" for="exp-email">Your email</label>
-            <input id="exp-email" type="email" name="email" placeholder="Your email" autocomplete="email" required>
-            <button type="submit" class="btn btn--dark">Send me the next experiment</button>
+            <label class="field-label" for="exp-email">Your email</label>
+            <div class="signup__row">
+              <input id="exp-email" type="email" name="email" placeholder="name@company.com" autocomplete="email" required>
+              <button type="submit" class="btn btn--primary">Send me the next experiment</button>
+            </div>
             <p class="signup__msg" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -316,9 +340,8 @@
     <section class="section" id="about">
       <div class="container about">
         <div class="about__media reveal">
-          <div class="media media--portrait" data-label="Portrait · 4:5">
-            <!-- Replace with: <img src="assets/mikka.jpg" alt="Mikka"> -->
-            <span class="media__caption">Photo of Mikka</span>
+          <div class="portrait portrait--about" data-label="Portrait · 4:5">
+            <!-- Replace with: <img src="assets/mikka.png" alt="Mikka"> -->
           </div>
           <div class="stat">
             <span class="stat__n">4M+</span>
@@ -326,8 +349,8 @@
           </div>
         </div>
         <div class="about__copy reveal" style="--d:.1s">
-          <p class="eyebrow">05 — About</p>
-          <h2 class="h2">Hi, I'm Mikka.</h2>
+          <p class="label">05 / About</p>
+          <h2 class="display-l">Hi, I'm Mikka.</h2>
           <p class="lead">
             A marketer with <span class="ph">[X years]</span> of experience across <span class="ph">[startups, SaaS, ecommerce]</span>.
             Most of what I know, I learned by needing it and figuring it out. I also run a comedy channel with 4M+ views, so I've learned what makes content travel.
@@ -336,10 +359,10 @@
             This newsletter is where I document the experiments: marketing, AI, systems, and how to build a life that doesn't get optimized into misery.
           </p>
           <ul class="pillars">
-            <li><span class="tag tag--work">Work Hacking</span></li>
-            <li><span class="tag tag--skill">Skill Hacking</span></li>
-            <li><span class="tag tag--leverage">Leverage Hacking</span></li>
-            <li><span class="tag tag--life">Life Hacking</span></li>
+            <li class="chip">01 / Work Hacking</li>
+            <li class="chip">02 / Skill Hacking</li>
+            <li class="chip">03 / Leverage Hacking</li>
+            <li class="chip">04 / Life Hacking</li>
           </ul>
         </div>
       </div>
@@ -348,7 +371,7 @@
     <!-- ============ WORK WITH ME (demoted) ============ -->
     <div class="quiet-line reveal">
       <div class="container">
-        <p>Need it done rather than figured out? <a href="work-with-me.html" class="link-underline">Work with me</a>.</p>
+        <p>Need it done rather than figured out? <a href="work-with-me.html" class="link">Work with me</a>.</p>
       </div>
     </div>
 
@@ -358,29 +381,29 @@
   <footer class="footer">
     <div class="container">
       <div class="footer__top">
+        <h2 class="display-l footer__title">One experiment a week. Zero guru fluff.</h2>
         <div>
-          <h2 class="footer__title">One experiment a week.<br><em>Zero guru fluff.</em></h2>
-        </div>
-        <div>
-          <form class="signup signup--light" data-signup novalidate>
-            <label class="sr-only" for="footer-email">Your email</label>
-            <input id="footer-email" type="email" name="email" placeholder="Your email" autocomplete="email" required>
-            <button type="submit" class="btn btn--accent">Send me the next experiment</button>
+          <form class="signup" data-signup novalidate>
+            <label class="field-label" for="footer-email">Your email</label>
+            <div class="signup__row">
+              <input id="footer-email" type="email" name="email" placeholder="name@company.com" autocomplete="email" required>
+              <button type="submit" class="btn btn--primary">Send me the next experiment</button>
+            </div>
             <p class="signup__msg" role="status" aria-live="polite"></p>
           </form>
-          <p class="micro micro--light">Free. One email a week. Unsubscribe anytime.
-            <a class="link-quiet" href="https://www.linkedin.com/" target="_blank" rel="noopener">Prefer LinkedIn?</a></p>
+          <p class="micro">Free. One email a week. Unsubscribe anytime.
+            <a class="link" href="https://www.linkedin.com/" target="_blank" rel="noopener">Prefer LinkedIn?</a></p>
         </div>
       </div>
       <div class="footer__bottom">
-        <a href="index.html" class="nav__logo nav__logo--light">mikka<span class="dot">.</span></a>
-        <nav aria-label="Footer">
+        <a href="index.html" class="wordmark">Work-Life Hacking <span class="script">Mikka Layese</span></a>
+        <nav class="label" aria-label="Footer">
           <a href="#experiments">Experiments</a>
           <a href="#how">How I work</a>
           <a href="#about">About</a>
           <a href="work-with-me.html">Work with me</a>
         </nav>
-        <p>© <span data-year>2026</span> Mikka</p>
+        <p class="label">© <span data-year>2026</span> Mikka Layese</p>
       </div>
     </div>
   </footer>
