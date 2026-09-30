@@ -432,3 +432,41 @@ em { font-family: var(--serif); font-style: normal; font-weight: 600; letter-spa
 .process strong { display: block; font-size: 20px; letter-spacing: -.02em; margin-bottom: 6px; }
 .process p { margin: 0; color: var(--ink-2); font-size: 16px; }
 .process { padding: 0; margin: 0; }
+
+/* ===========================================================
+   Home hero: fits one screen, video sits beside the headline
+   =========================================================== */
+.hero--home { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; padding: 88px 0 28px; }
+.hero--home .hero__grid {
+  width: 100%; align-items: start;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: "label ." "title media" "copy media";
+  column-gap: clamp(32px, 5vw, 72px); row-gap: 0;
+}
+.hero--home .hero__eyebrow { grid-area: label; justify-self: start; margin: 0 0 18px; }
+.hero--home .hero__title {
+  grid-area: title; margin: 0 0 20px;
+  font-size: clamp(31px, min(5.16vw, 8.4vh), 82px); /* 40% smaller than before; also scales with viewport height */
+  letter-spacing: -.045em;
+}
+.hero--home .line__inner { display: block; }
+.hero--home .hero__title em { font-size: 1.3em; line-height: .5; }
+.hero--home .hero__copy { grid-area: copy; }
+.hero--home .lead { font-size: clamp(16px, min(1.4vw, 2.3vh), 20px); margin-bottom: 18px; }
+.hero--home .link-arrow { margin-top: 14px; }
+.hero--home .hero__media { grid-area: media; align-self: start; }
+
+.video { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: var(--dark); box-shadow: 0 40px 80px -50px rgba(0,0,0,.5); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+@media (max-width: 900px) {
+  .hero--home { align-items: flex-start; }
+  .hero--home .hero__grid { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: "label" "title" "media" "copy"; }
+  .hero--home .hero__title { font-size: clamp(30px, 8.4vw, 56px); margin-bottom: 28px; }
+  .hero--home .hero__media { margin-bottom: 36px; }
+}
+
+/* About portrait: transparent cut-out on bright yellow */
+.portrait { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: #fff352; }
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }

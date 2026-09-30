@@ -18,3 +18,6 @@ Static landing page. No build step: open `index.html` or deploy the folder to an
 
 ## Design tokens
 Accent red `#EE3D4C` and the ice/white backgrounds are the `--accent`, `--bg`, `--bg-tint` and `--surface` variables at the top of `assets/styles.css`. Handwritten accents use Caveat (`--serif` variable, kept for its old name).
+
+## Hero video & photo
+The hero video is the YouTube embed in `.hero__media` (swap the video ID in the iframe `src`). Mikka's photo is `assets/mikka.webp` (transparent cut-out) on a `#FFF352` card in the About section.
