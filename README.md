@@ -5,7 +5,7 @@ Static landing page. No build step: open `index.html` or deploy the folder to an
 ## Files
 - `index.html`: homepage (hero with signup → who it's for → what you get → signup → how I work → experiments → about → work-with-me line → footer signup)
 - `work-with-me.html`: services page (last in nav)
-- `assets/styles.css`: all styles, built on the Work-Life Hacking visual identity tokens (top of file)
+- `assets/styles.css`: all styles (colour tokens at the top)
 - `assets/main.js`: animations, experiment filters, signup forms
 
 ## Before launch
@@ -16,5 +16,5 @@ Static landing page. No build step: open `index.html` or deploy the folder to an
 5. **Media:** swap each `.media` placeholder for an `<img>` or `<video autoplay muted loop playsinline>` (see the comments in the HTML).
 6. **Subscriber count:** once it's worth showing, uncomment the "Join [X] founders and marketers" line in the hero.
 
-## Visual identity
-Styled per the Work-Life Hacking visual identity guide: Bricolage Grotesque / Inter / JetBrains Mono / Caveat, flat colour, one sunshine block per screen, one night panel (How I work). Still needed from Mikka: the transparent portrait cut-out(s) (`.portrait`), the wave-hand glyph (placeholder in `.wave`), and an avatar for the nav.
+## Design tokens
+Accent red `#EE3D4C` and the ice/white backgrounds are the `--accent`, `--bg`, `--bg-tint` and `--surface` variables at the top of `assets/styles.css`. Handwritten accents use Caveat (`--serif` variable, kept for its old name).

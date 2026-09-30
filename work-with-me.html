@@ -5,66 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Work with Mikka</title>
   <meta name="description" content="Need it done rather than figured out? Marketing systems, growth and content for founders and small teams.">
-  <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
 
   <header class="nav" id="nav">
-    <a href="index.html" class="nav__avatar" aria-label="Mikka, home"><span aria-hidden="true">M</span></a>
-    <nav class="nav__links" aria-label="Main">
-      <a href="index.html#experiments">Experiments</a>
-      <a href="index.html#how">How I work</a>
-      <a href="index.html#about">About</a>
-      <a href="work-with-me.html" class="nav__quiet" aria-current="page">Work with me</a>
-    </nav>
-    <a href="index.html#subscribe" class="btn btn--contact">Subscribe</a>
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Mikka, home">mikka<span class="dot">.</span></a>
+      <nav class="nav__links" aria-label="Main">
+        <a href="index.html#experiments">Experiments</a>
+        <a href="index.html#how">How I work</a>
+        <a href="index.html#about">About</a>
+        <a href="work-with-me.html" class="nav__quiet" aria-current="page">Work with me</a>
+      </nav>
+      <a href="index.html#subscribe" class="btn btn--sm btn--dark nav__cta">Subscribe</a>
+    </div>
   </header>
 
   <main>
-    <section class="hero hero--page">
+    <section class="hero page-hero">
       <div class="container">
-        <div class="hero__copy">
-          <p class="label hero__label reveal-up"><span class="status-dot" aria-hidden="true"></span>Taking on <span class="ph">[N]</span> projects this quarter</p>
-          <h1 class="hero__title" aria-label="Need it done rather than figured out?">
-            <span class="line"><span class="line__inner">Need it <span class="mark-wrap">done<svg class="mark" viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" vector-effect="non-scaling-stroke" d="M3 8 C 60 3, 120 10, 180 6 S 270 5, 297 7"/></svg></span></span></span>
-            <span class="line"><span class="line__inner">rather than</span></span>
-            <span class="line"><span class="line__inner">figured out?</span></span>
-          </h1>
-          <div class="reveal-up" style="--d:.5s">
-            <p class="lead">
-              Sometimes you don't want the experiment, you want the result. I work with a small number of founders and teams who need marketing that runs on systems instead of heroics.
-            </p>
-            <!-- TODO: replace with your booking link or email -->
-            <a href="mailto:hello@example.com" class="btn btn--primary">Start a conversation</a>
-          </div>
+        <p class="eyebrow hero__eyebrow reveal-up"><span class="pulse" aria-hidden="true"></span>Taking on <span class="ph">[N]</span> projects this quarter</p>
+        <h1 class="hero__title" aria-label="Need it done rather than figured out?">
+          <span class="line"><span class="line__inner">Need it <em>done</em></span></span>
+          <span class="line"><span class="line__inner">rather than</span></span>
+          <span class="line"><span class="line__inner">figured out?</span></span>
+        </h1>
+        <div class="reveal-up" style="--d:.5s">
+          <p class="lead">
+            Sometimes you don't want the experiment, you want the result. I work with a small number of founders and teams who need marketing that runs on systems instead of heroics.
+          </p>
+          <!-- TODO: replace with your booking link or email -->
+          <a href="mailto:hello@example.com" class="btn btn--accent">Start a conversation</a>
         </div>
       </div>
     </section>
 
-    <section class="section section--raised">
+    <section class="section section--tint">
       <div class="container">
         <div class="section__head reveal">
-          <p class="label">01 / What I can do for you</p>
-          <h2 class="display-l">An in-house generalist, <span class="hl">without the hire.</span></h2>
+          <p class="eyebrow">What I can do for you</p>
+          <h2 class="h2">An in-house generalist, <em>without the hire.</em></h2>
         </div>
         <div class="services">
           <article class="card reveal">
-            <h3 class="display-m">Growth systems</h3>
+            <h3 class="h3">Growth systems</h3>
             <p>Repeatable client acquisition that doesn't depend on the founder's network.</p>
             <ul><li>Outbound &amp; inbound tracks</li><li>Positioning &amp; messaging</li><li>Channel testing</li></ul>
           </article>
           <article class="card reveal" style="--d:.08s">
-            <h3 class="display-m">Content that travels</h3>
+            <h3 class="h3">Content that travels</h3>
             <p>Content built on what actually makes people watch, share and reply.</p>
             <ul><li>Content strategy</li><li>Short-form video</li><li>Email &amp; newsletters</li></ul>
           </article>
           <article class="card reveal" style="--d:.16s">
-            <h3 class="display-m">AI &amp; automation</h3>
+            <h3 class="h3">AI &amp; automation</h3>
             <p>Remove the manual work so a small team can do what normally takes a big one.</p>
             <ul><li>Workflow automation</li><li>AI-assisted research &amp; ops</li><li>Tool stack setup</li></ul>
           </article>
@@ -75,8 +74,8 @@
     <section class="section">
       <div class="container">
         <div class="section__head reveal">
-          <p class="label">02 / How it works</p>
-          <h2 class="display-l">Simple, <span class="hl">on purpose.</span></h2>
+          <p class="eyebrow">How it works</p>
+          <h2 class="h2">Simple, <em>on purpose.</em></h2>
         </div>
         <ol class="process reveal">
           <li><strong>Intro call</strong><p>30 minutes to understand the problem and whether I'm the right fit.</p></li>
@@ -89,7 +88,7 @@
 
     <div class="quiet-line reveal">
       <div class="container">
-        <p>Rather figure it out yourself? <a href="index.html#subscribe" class="link">Get the weekly experiment</a>.</p>
+        <p>Rather figure it out yourself? <a href="index.html#subscribe" class="link-underline">Get the weekly experiment</a>.</p>
       </div>
     </div>
   </main>
@@ -97,29 +96,29 @@
   <footer class="footer">
     <div class="container">
       <div class="footer__top">
-        <h2 class="display-l footer__title">One experiment a week. Zero guru fluff.</h2>
         <div>
-          <form class="signup" data-signup novalidate>
-            <label class="field-label" for="footer-email">Your email</label>
-            <div class="signup__row">
-              <input id="footer-email" type="email" name="email" placeholder="name@company.com" autocomplete="email" required>
-              <button type="submit" class="btn btn--primary">Send me the next experiment</button>
-            </div>
+          <h2 class="footer__title">One experiment a week.<br><em>Zero guru fluff.</em></h2>
+        </div>
+        <div>
+          <form class="signup signup--light" data-signup novalidate>
+            <label class="sr-only" for="footer-email">Your email</label>
+            <input id="footer-email" type="email" name="email" placeholder="Your email" autocomplete="email" required>
+            <button type="submit" class="btn btn--accent">Send me the next experiment</button>
             <p class="signup__msg" role="status" aria-live="polite"></p>
           </form>
-          <p class="micro">Free. One email a week. Unsubscribe anytime.
-            <a class="link" href="https://www.linkedin.com/" target="_blank" rel="noopener">Prefer LinkedIn?</a></p>
+          <p class="micro micro--light">Free. One email a week. Unsubscribe anytime.
+            <a class="link-quiet" href="https://www.linkedin.com/" target="_blank" rel="noopener">Prefer LinkedIn?</a></p>
         </div>
       </div>
       <div class="footer__bottom">
-        <a href="index.html" class="wordmark">Work-Life Hacking <span class="script">Mikka Layese</span></a>
-        <nav class="label" aria-label="Footer">
+        <a href="index.html" class="nav__logo nav__logo--light">mikka<span class="dot">.</span></a>
+        <nav aria-label="Footer">
           <a href="index.html#experiments">Experiments</a>
           <a href="index.html#how">How I work</a>
           <a href="index.html#about">About</a>
           <a href="work-with-me.html">Work with me</a>
         </nav>
-        <p class="label">© <span data-year>2026</span> Mikka Layese</p>
+        <p>© <span data-year>2026</span> Mikka</p>
       </div>
     </div>
   </footer>
