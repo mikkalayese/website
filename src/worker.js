@@ -2,7 +2,7 @@
  * Newsletter signup endpoint.
  *   POST /api/subscribe  { "email": "a@b.com" }
  * Adds (or updates) the contact in Brevo and puts it on the list named by
- * BREVO_LIST_NAME ("su primera lista"), or BREVO_LIST_ID if that is set.
+ * BREVO_LIST_NAME ("newsletter sign ups"), or BREVO_LIST_ID if that is set.
  * Everything else is served from the static site.
  *
  * Secret (never commit it): BREVO_API_KEY
@@ -50,7 +50,7 @@ async function resolveListId(env, apiKey) {
   if (env.BREVO_LIST_ID) return parseInt(env.BREVO_LIST_ID, 10);
   if (cachedListId) return cachedListId;
 
-  const wanted = String(env.BREVO_LIST_NAME || "su primera lista").trim().toLowerCase();
+  const wanted = String(env.BREVO_LIST_NAME || "newsletter sign ups").trim().toLowerCase();
   const limit = 50;
   for (let offset = 0; offset < 1000; offset += limit) {
     const res = await brevo(`/contacts/lists?limit=${limit}&offset=${offset}`, apiKey);
@@ -61,7 +61,7 @@ async function resolveListId(env, apiKey) {
     if (match) return (cachedListId = match.id);
     if (offset + limit >= (data.count || 0) || lists.length === 0) break;
   }
-  throw new SignupError(`List "${env.BREVO_LIST_NAME || "su primera lista"}" not found in Brevo`);
+  throw new SignupError(`List "${env.BREVO_LIST_NAME || "newsletter sign ups"}" not found in Brevo`);
 }
 
 async function subscribe(request, env) {
