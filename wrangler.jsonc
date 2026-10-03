@@ -1,9 +1,9 @@
 {
   // Cloudflare Worker: serves this static site and handles POST /api/subscribe.
   // The Brevo key is NOT stored here. Add it as a secret named BREVO_API_KEY
-  // (Cloudflare dashboard > Workers > website > Settings > Variables and secrets,
+  // (Cloudflare dashboard > Workers > marketing > Settings > Variables and secrets,
   //  or: npx wrangler secret put BREVO_API_KEY).
-  "name": "website",
+  "name": "marketing",
   "main": "src/worker.js",
   "compatibility_date": "2025-09-01",
   "assets": {
