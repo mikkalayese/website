@@ -108,6 +108,8 @@ async function status(env) {
     keyPresent: !!apiKey,
     keyFormat: apiKey ? (apiKey.startsWith("xkeysib-") ? "ok" : "unexpected (should start with xkeysib-)") : null,
     listId: env.BREVO_LIST_ID || null,
+    // Names only, never values: shows which settings this Worker can actually see.
+    visibleSettings: Object.keys(env).filter((k) => k !== "ASSETS").sort(),
   };
   if (!apiKey) return json(out);
   try {
