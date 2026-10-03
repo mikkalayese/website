@@ -23,7 +23,7 @@ Accent red `#EE3D4C` and the ice/white backgrounds are the `--accent`, `--bg`, `
 The hero video is the YouTube embed in `.hero__media` (swap the video ID in the iframe `src`). Mikka's photo is `assets/mikka.webp` (transparent cut-out) on a `#FFF352` card in the About section.
 
 ## Brevo signups
-All signup forms post to `/api/subscribe`, handled by the Cloudflare Worker in `src/worker.js`. It adds the email to the Brevo list named **"su primera lista"** (existing contacts are updated and added to the list). The list is found by name, or set `BREVO_LIST_ID` to pin it.
+All signup forms post to `/api/subscribe`, handled by the Cloudflare Worker in `src/worker.js`. It adds the email to the Brevo list named **"newsletter sign ups"** (list ID 5) (existing contacts are updated and added to the list). The list is found by name, or set `BREVO_LIST_ID` to pin it.
 
 The Brevo API key is a **secret** and must never be committed or put in front-end code. To set it up:
 1. Brevo: *SMTP & API > API keys > Generate a new API key* (the raw `xkeysib-...` value, or the base64 form from the MCP page; both work).
