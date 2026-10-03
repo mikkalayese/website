@@ -1,10 +1,10 @@
 /* ===========================================================
-   CONFIG — connect your email provider here.
-   Paste the form endpoint from ConvertKit / Beehiiv / Buttondown /
-   MailerLite etc. Every signup form on the site posts to it with
-   a single "email" field. Leave empty to run in demo mode.
+   Newsletter signups post to /api/subscribe (src/worker.js), which
+   adds the email to the Brevo list. The Brevo API key lives only in
+   the Worker as a secret, never in this file.
+   Set to "" to run in demo mode (nothing is sent).
    =========================================================== */
-const NEWSLETTER_ENDPOINT = "";
+const NEWSLETTER_ENDPOINT = "/api/subscribe";
 
 (() => {
   const root = document.documentElement;
@@ -67,6 +67,13 @@ const NEWSLETTER_ENDPOINT = "";
     const btn = form.querySelector("button");
     const msg = form.querySelector(".signup__msg");
 
+    // Honeypot field for bots (hidden from people)
+    const hp = document.createElement("input");
+    hp.type = "text"; hp.name = "company"; hp.tabIndex = -1; hp.autocomplete = "off";
+    hp.setAttribute("aria-hidden", "true");
+    hp.style.cssText = "position:absolute;left:-9999px;width:1px;height:1px;opacity:0;";
+    form.appendChild(hp);
+
     form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
       const email = input.value.trim();
@@ -82,16 +89,22 @@ const NEWSLETTER_ENDPOINT = "";
       btn.disabled = true;
       try {
         if (NEWSLETTER_ENDPOINT) {
-          const body = new FormData();
-          body.append("email", email);
-          await fetch(NEWSLETTER_ENDPOINT, { method: "POST", body, mode: "no-cors" });
+          const res = await fetch(NEWSLETTER_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, company: hp.value }),
+          });
+          if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            throw new Error(data.error || "Request failed");
+          }
         } else {
           console.info("[newsletter] Demo mode: set NEWSLETTER_ENDPOINT in assets/main.js to collect", email);
         }
         form.classList.add("is-done");
         msg.textContent = "You're in. The next experiment lands in your inbox this week.";
       } catch (err) {
-        msg.textContent = "Something went wrong. Please try again.";
+        msg.textContent = err && err.message && err.message !== "Request failed" && !/fetch|network/i.test(err.message) ? err.message : "Something went wrong. Please try again.";
         msg.classList.add("is-error");
       } finally {
         btn.disabled = false;
