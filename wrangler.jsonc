@@ -12,6 +12,8 @@
     "run_worker_first": ["/api/*"]
   },
   "vars": {
-    "BREVO_LIST_NAME": "su primera lista"
+    "BREVO_LIST_NAME": "su primera lista",
+    // Brevo list ID (Contacts > Lists). When set, the Worker skips the name lookup.
+    "BREVO_LIST_ID": "2"
   }
 }
