@@ -27,5 +27,5 @@ All signup forms post to `/api/subscribe`, handled by the Cloudflare Worker in `
 
 The Brevo API key is a **secret** and must never be committed or put in front-end code. To set it up:
 1. Brevo: *SMTP & API > API keys > Generate a new API key* (the raw `xkeysib-...` value, or the base64 form from the MCP page; both work).
-2. Cloudflare: *Workers & Pages > website > Settings > Variables and secrets > Add* a **Secret** named `BREVO_API_KEY`. Or run `npx wrangler secret put BREVO_API_KEY`.
-3. Deploy (`npx wrangler deploy`, or push if Workers Builds is connected). The worker name in `wrangler.jsonc` is `website`; change it if your Worker is named differently.
+2. Cloudflare: *Workers & Pages > marketing > Settings > Variables and secrets > Add* a **Secret** named `BREVO_API_KEY`. Or run `npx wrangler secret put BREVO_API_KEY`.
+3. Deploy (`npx wrangler deploy`, or push if Workers Builds is connected). The worker name in `wrangler.jsonc` (`marketing`) must match the Worker name in the Cloudflare dashboard.
