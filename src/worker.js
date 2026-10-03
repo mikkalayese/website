@@ -37,6 +37,15 @@ async function brevo(path, apiKey, init = {}) {
   });
 }
 
+async function brevoMessage(res) {
+  const text = (await res.text()).slice(0, 300);
+  try { const j = JSON.parse(text); return j.message || j.code || text; } catch (_) { return text; }
+}
+
+class SignupError extends Error {
+  constructor(detail) { super(detail); this.detail = detail; }
+}
+
 async function resolveListId(env, apiKey) {
   if (env.BREVO_LIST_ID) return parseInt(env.BREVO_LIST_ID, 10);
   if (cachedListId) return cachedListId;
@@ -45,14 +54,14 @@ async function resolveListId(env, apiKey) {
   const limit = 50;
   for (let offset = 0; offset < 1000; offset += limit) {
     const res = await brevo(`/contacts/lists?limit=${limit}&offset=${offset}`, apiKey);
-    if (!res.ok) throw new Error(`Brevo list lookup failed: ${res.status}`);
+    if (!res.ok) throw new SignupError(`Brevo list lookup ${res.status}: ${await brevoMessage(res)}`);
     const data = await res.json();
     const lists = data.lists || [];
     const match = lists.find((l) => String(l.name || "").trim().toLowerCase() === wanted);
     if (match) return (cachedListId = match.id);
     if (offset + limit >= (data.count || 0) || lists.length === 0) break;
   }
-  throw new Error(`Brevo list "${env.BREVO_LIST_NAME || "su primera lista"}" not found`);
+  throw new SignupError(`List "${env.BREVO_LIST_NAME || "su primera lista"}" not found in Brevo`);
 }
 
 async function subscribe(request, env) {
@@ -70,7 +79,7 @@ async function subscribe(request, env) {
   const apiKey = normalizeKey(env.BREVO_API_KEY);
   if (!apiKey) {
     console.error("BREVO_API_KEY is not set");
-    return json({ error: "Signup is not configured yet." }, 500);
+    return json({ error: "Signup is not configured yet.", detail: "BREVO_API_KEY secret not visible to the Worker" }, 500);
   }
 
   try {
@@ -82,17 +91,42 @@ async function subscribe(request, env) {
     });
     if (res.status === 201 || res.status === 204) return json({ ok: true });
 
-    console.error("Brevo create contact failed", res.status, (await res.text()).slice(0, 300));
-    return json({ error: "Couldn't sign you up. Please try again." }, 502);
+    const detail = `Brevo ${res.status}: ${await brevoMessage(res)}`;
+    console.error("Brevo create contact failed", detail);
+    return json({ error: "Couldn't sign you up. Please try again.", detail }, 502);
   } catch (err) {
+    const detail = err instanceof SignupError ? err.message : "Could not reach Brevo";
     console.error("Subscribe error", err && err.message);
-    return json({ error: "Couldn't sign you up. Please try again." }, 502);
+    return json({ error: "Couldn't sign you up. Please try again.", detail }, 502);
   }
+}
+
+/** GET /api/status: reports whether the key and list work. Never returns the key. */
+async function status(env) {
+  const apiKey = normalizeKey(env.BREVO_API_KEY);
+  const out = {
+    keyPresent: !!apiKey,
+    keyFormat: apiKey ? (apiKey.startsWith("xkeysib-") ? "ok" : "unexpected (should start with xkeysib-)") : null,
+    listId: env.BREVO_LIST_ID || null,
+  };
+  if (!apiKey) return json(out);
+  try {
+    const acc = await brevo("/account", apiKey);
+    out.brevoAccount = acc.ok ? { status: acc.status, ok: true } : { status: acc.status, message: await brevoMessage(acc) };
+    if (env.BREVO_LIST_ID) {
+      const l = await brevo(`/contacts/lists/${encodeURIComponent(env.BREVO_LIST_ID)}`, apiKey);
+      out.brevoList = l.ok ? { status: l.status, name: (await l.json()).name } : { status: l.status, message: await brevoMessage(l) };
+    }
+  } catch (err) {
+    out.error = "Could not reach Brevo";
+  }
+  return json(out);
 }
 
 export default {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
+    if (pathname === "/api/status") return status(env);
     if (pathname === "/api/subscribe") {
       if (request.method !== "POST") return json({ error: "Method not allowed." }, 405, { Allow: "POST" });
       return subscribe(request, env);

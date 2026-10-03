@@ -96,7 +96,7 @@ const NEWSLETTER_ENDPOINT = "/api/subscribe";
           });
           if (!res.ok) {
             const data = await res.json().catch(() => ({}));
-            throw new Error(data.error || "Request failed");
+            throw new Error(data.error ? data.error + (data.detail ? " (" + data.detail + ")" : "") : "Request failed");
           }
         } else {
           console.info("[newsletter] Demo mode: set NEWSLETTER_ENDPOINT in assets/main.js to collect", email);
