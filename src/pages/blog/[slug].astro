@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostSignup from '../../components/PostSignup.astro';
+import { getPosts, getPost } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const post = await getPost(Astro.params.slug!);
+if (!post) return Astro.redirect('/blog');
+---
+<Base
+  title={`${post.title} — Mikka`}
+  description={post.summary || undefined}
+  ogTitle={post.title}
+  ogDescription={post.summary || undefined}
+  current="blog"
+>
+  <article>
+    <header class="post-head">
+      <div class="container post-narrow">
+        <a href="/blog" class="link-arrow post-back"><span aria-hidden="true">←</span> All posts</a>
+        <p class="exp__meta reveal-up">
+          <span class={`tag tag--${post.pillar}`}>{post.pillarLabel}</span>
+          {post.dateLabel && <> · {post.dateLabel}</>} · {post.minutes}-minute read
+          {post.draft && <span class="badge-draft">Draft</span>}
+        </p>
+        <h1 class="post-title reveal-up" style="--d:.08s">{post.title}</h1>
+        {post.summary && <p class="lead reveal-up" style="--d:.16s">{post.summary}</p>}
+      </div>
+    </header>
+
+    {post.coverImage && (
+      <div class="container post-wide reveal">
+        <img class="post-cover" src={post.coverImage} alt="" width="1600" height="1000">
+      </div>
+    )}
+
+    <div class="container post-narrow">
+      <div class="prose" set:html={post.html} />
+    </div>
+  </article>
+
+  <section class="section section--tint post-after">
+    <div class="container post-narrow">
+      <PostSignup id="post-email" />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import PostSignup from '../../components/PostSignup.astro';
+import { getPosts, PILLARS } from '../../lib/posts';
+
+const posts = await getPosts();
+---
+<Base
+  title="Blog — Mikka"
+  description="What I tried, what happened, and what you can steal: marketing, AI and systems experiments."
+  current="blog"
+>
+  <section class="blog-head">
+    <div class="container">
+      <p class="eyebrow reveal-up">Blog</p>
+      <h1 class="blog-title reveal-up" style="--d:.1s">What I tried, <em>and what happened.</em></h1>
+    </div>
+  </section>
+
+  <section class="section section--tint blog-list">
+    <div class="container">
+      {posts.length > 0 ? (
+        <>
+          <div class="filters reveal" role="group" aria-label="Filter posts by pillar">
+            <button class="filter is-active" data-filter="all">All</button>
+            {Object.entries(PILLARS).map(([value, label]) => (
+              <button class="filter" data-filter={value}>{label}</button>
+            ))}
+          </div>
+          <div class="post-grid">
+            {posts.map((post, i) => <PostCard post={post} delay={Math.min(i, 5) * 0.06} />)}
+          </div>
+        </>
+      ) : (
+        <p class="note reveal">No posts yet. Subscribe below and the first experiment lands in your inbox.</p>
+      )}
+      <div class="blog-signup"><PostSignup id="blog-email" /></div>
+    </div>
+  </section>
+</Base>

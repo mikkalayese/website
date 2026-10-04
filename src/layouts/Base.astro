@@ -1,0 +1,90 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  /** Marks the matching nav item as the current page. */
+  current?: 'home' | 'blog' | 'work';
+}
+const {
+  title,
+  description = "One real experiment a week on marketing, AI and systems, for founders and marketers who'd rather figure it out themselves than wait on an expert.",
+  ogTitle = title,
+  ogDescription = 'One experiment a week. Zero guru fluff.',
+  current = 'home',
+} = Astro.props;
+// Section anchors live on the home page; from other pages link to "/#section".
+const home = current === 'home' ? '' : '/';
+---
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <meta property="og:title" content={ogTitle}>
+  <meta property="og:description" content={ogDescription}>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="/" class="nav__logo" aria-label="Mikka, home">mikka<span class="dot">.</span></a>
+      <nav class="nav__links" aria-label="Main">
+        <a href={`${home}#experiments`}>Experiments</a>
+        <a href={`${home}#how`}>How I work</a>
+        <a href="/blog" aria-current={current === 'blog' ? 'page' : undefined}>Blog</a>
+        <a href={`${home}#about`}>About</a>
+        <a href="/work-with-me" class="nav__quiet" aria-current={current === 'work' ? 'page' : undefined}>Work with me</a>
+      </nav>
+      <a href={`${home}#subscribe`} class="btn btn--sm btn--dark nav__cta">Subscribe</a>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <h2 class="footer__title">One experiment a week.<br><em>Zero guru fluff.</em></h2>
+        </div>
+        <div>
+          <form class="signup signup--light" data-signup novalidate>
+            <label class="sr-only" for="footer-email">Your email</label>
+            <input id="footer-email" type="email" name="email" placeholder="Your email" autocomplete="email" required>
+            <button type="submit" class="btn btn--accent">Send me the next experiment</button>
+            <p class="signup__msg" role="status" aria-live="polite"></p>
+          </form>
+          <p class="micro micro--light">Free. One email a week. Unsubscribe anytime.
+            <a class="link-quiet" href="https://www.linkedin.com/" target="_blank" rel="noopener">Prefer LinkedIn?</a></p>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <a href="/" class="nav__logo nav__logo--light">mikka<span class="dot">.</span></a>
+        <nav aria-label="Footer">
+          <a href={`${home}#experiments`}>Experiments</a>
+          <a href={`${home}#how`}>How I work</a>
+          <a href="/blog">Blog</a>
+          <a href={`${home}#about`}>About</a>
+          <a href="/work-with-me">Work with me</a>
+        </nav>
+        <p>© <span data-year>2026</span> Mikka</p>
+      </div>
+    </div>
+  </footer>
+
+  <script is:inline src="/assets/main.js" defer></script>
+</body>
+</html>
