@@ -40,7 +40,9 @@ Tips: pull before you start writing; keep images under about 1 MB.
 The signup form shows an error in `npm run dev` because `/api/subscribe` only exists in the Worker; use `npx wrangler dev` to test it.
 
 ## Cloudflare
-The deploy command stays `npx wrangler deploy`. `wrangler.jsonc` runs `npm run build` itself before every deploy, so no extra build command is needed in the dashboard. If the build complains about the Node version, add the build variable `NODE_VERSION` = `22` (Workers & Pages → **marketing** → Settings → Build).
+Cloudflare's Workers Builds ignores the `build.command` in `wrangler.jsonc`, so the site is built by the **`postinstall`** script in `package.json`: Cloudflare always runs `npm install` first, which builds `dist/`, and then `npx wrangler deploy` uploads it. No build command is needed in the dashboard (adding `npm run build` there is harmless, just a second build).
+
+`npm install` therefore also builds the site locally; that is expected. If the build complains about the Node version, add the build variable `NODE_VERSION` = `22` (Workers & Pages → **marketing** → Settings → Build).
 
 ## Brevo signups
 All signup forms post to `/api/subscribe` (`src/worker.js`), which adds the email to the Brevo list **"newsletter sign ups"** (ID 5). Existing contacts are updated and added to the list.
