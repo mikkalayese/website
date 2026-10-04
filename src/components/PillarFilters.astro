@@ -1,0 +1,13 @@
+---
+// Pillar filter chips. Works on any section marked data-filter-scope:
+// it shows the cards whose data-pillar matches (set by the Pillar field in Keystatic).
+import { PILLARS } from '../lib/posts';
+interface Props { label?: string }
+const { label = 'Filter posts by pillar' } = Astro.props;
+---
+<div class="filters reveal" role="group" aria-label={label} data-filter-group>
+  <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All</button>
+  {Object.entries(PILLARS).map(([value, name]) => (
+    <button type="button" class="filter" data-filter={value} aria-pressed="false">{name}</button>
+  ))}
+</div>

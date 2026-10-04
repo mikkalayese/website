@@ -49,15 +49,40 @@ const NEWSLETTER_ENDPOINT = "/api/subscribe";
     window.addEventListener("resize", update);
   }
 
-  // Experiment filters
-  const filters = document.querySelectorAll("[data-filter]");
-  const exps = document.querySelectorAll(".exp[data-pillar]");
-  filters.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const f = btn.dataset.filter;
-      filters.forEach((b) => b.classList.toggle("is-active", b === btn));
-      exps.forEach((el) => { el.hidden = f !== "all" && el.dataset.pillar !== f; });
+  // Pillar filters (homepage Experiments + /blog).
+  // Each [data-filter-scope] has its own chips; cards carry data-pillar from the
+  // Pillar field in Keystatic. An optional [data-limit] caps how many show at once.
+  document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
+    const group = scope.querySelector("[data-filter-group]");
+    if (!group) return;
+    const buttons = group.querySelectorAll("[data-filter]");
+    const cards = scope.querySelectorAll(".post-card[data-pillar]");
+    const limitEl = scope.querySelector("[data-limit]");
+    const limit = limitEl ? parseInt(limitEl.dataset.limit, 10) || 0 : 0;
+    const empty = scope.querySelector("[data-filter-empty]");
+
+    const apply = (filter, initial = false) => {
+      let shown = 0;
+      cards.forEach((card) => {
+        const match = filter === "all" || card.dataset.pillar === filter;
+        const show = match && (!limit || shown < limit);
+        card.hidden = !show;
+        if (show) { shown++; if (!initial) card.classList.add("is-in"); }
+      });
+      if (empty) empty.hidden = shown > 0;
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        buttons.forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle("is-active", on);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        apply(btn.dataset.filter);
+      });
     });
+    apply("all", true);
   });
 
   // Signup forms
