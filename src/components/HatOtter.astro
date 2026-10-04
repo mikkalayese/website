@@ -1,12 +1,16 @@
 ---
 // "You wear twenty hats": the otter tries on one hat after another.
-// Swap the image for the animated GIF by changing `src` (e.g. /assets/otter.gif).
-interface Props { src?: string }
-const { src = '/assets/otter.webp' } = Astro.props;
+// The otter is an animated WebP made from design-assets/otter.gif (1.4 MB instead of 6.8 MB).
+// People who prefer reduced motion get a still frame instead.
+interface Props { src?: string; still?: string }
+const { src = '/assets/otter.webp', still = '/assets/otter-still.webp' } = Astro.props;
 ---
 <figure class="hat-otter" aria-label="An otter trying on one hat after another">
   <div class="hat-otter__body">
-    <img src={src} alt="" width="480" height="480" loading="lazy" decoding="async">
+    <picture>
+      <source srcset={still} media="(prefers-reduced-motion: reduce)">
+      <img src={src} alt="" width="480" height="480" loading="lazy" decoding="async">
+    </picture>
     <div class="hat-otter__head" aria-hidden="true">
       <!-- Top hat -->
       <svg class="hat hat--1" viewBox="0 0 100 80"><rect x="28" y="6" width="44" height="52" rx="5" fill="#121212"/><rect x="28" y="40" width="44" height="10" fill="#EE3D4C"/><ellipse cx="50" cy="60" rx="46" ry="11" fill="#121212"/></svg>
