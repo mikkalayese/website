@@ -467,8 +467,8 @@ em { font-family: var(--serif); font-style: normal; font-weight: 600; letter-spa
   .hero--home .hero__media { margin-bottom: 36px; }
 }
 
-/* About portrait: transparent cut-out on bright yellow */
-.portrait { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: #fff352; }
+/* About portrait: transparent cut-out on ice */
+.portrait { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--bg-tint); }
 .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
 
 /* ===========================================================
@@ -520,3 +520,78 @@ em { font-family: var(--serif); font-style: normal; font-weight: 600; letter-spa
 .prose code { font: 500 .88em ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--bg-tint); padding: 2px 6px; border-radius: 5px; color: var(--ink); }
 .prose pre { background: var(--dark); color: var(--on-dark); padding: 20px; border-radius: var(--radius-sm); overflow-x: auto; font-size: 15px; line-height: 1.6; }
 .prose pre code { background: none; color: inherit; padding: 0; }
+
+
+/* ===========================================================
+   Consistent headline scale + wider layout on large screens
+   One size for every h1 (page titles) and one for every h2 (section titles).
+   Sizes stop growing at ~1700px wide, so 1920px and larger look the same.
+   =========================================================== */
+:root {
+  --fs-h1: clamp(36px, 5.1vw, 84px);
+  --fs-h2: clamp(30px, 3.4vw, 58px);
+}
+@media (max-width: 900px) {
+  :root { --fs-h1: clamp(34px, 9vw, 56px); --fs-h2: clamp(28px, 7.4vw, 42px); }
+}
+/* Less empty space at the sides on big screens */
+@media (min-width: 1600px) { :root { --maxw: 1560px; } }
+
+.hero__title, .page-hero .hero__title, .blog-title, .post-title {
+  font-size: var(--fs-h1); line-height: .95; letter-spacing: -.045em;
+}
+/* Home hero still fits one screen on short laptops */
+.hero--home .hero__title { font-size: min(var(--fs-h1), 8.4vh); }
+@media (max-width: 900px) { .hero--home .hero__title { font-size: var(--fs-h1); } }
+
+.h2, .cta__title, .footer__title, .statement {
+  font-size: var(--fs-h2); line-height: 1.04; letter-spacing: -.035em;
+}
+.h2 { max-width: 21em; }
+.blog-title { max-width: 18em; }
+.post-title { max-width: 18em; }
+
+/* Section heading with an aside (Experiments) */
+.section__head--row > div:first-child { flex: 1 1 520px; }
+.section__aside { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; flex: 0 0 auto; }
+.section__aside p { margin: 0; }
+.section__aside .link-arrow { margin-top: 0; color: var(--ink); }
+.filter-empty { margin: 28px 0 0; }
+
+/* ---------- Who it's for: otter trying on hats ---------- */
+.who__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: clamp(24px, 4vw, 72px); }
+.who__mascot { width: clamp(170px, 17vw, 320px); }
+@media (max-width: 700px) {
+  .who__head { grid-template-columns: 1fr; }
+  .who__mascot { width: 170px; justify-self: end; margin-top: 8px; }
+}
+.hat-otter { margin: 0; position: relative; }
+.hat-otter__body { position: relative; } /* the otter itself is animated now */
+.hat-otter img { display: block; width: 100%; height: auto; }
+.hat-otter__head { position: absolute; left: 62%; top: 24.5%; width: 36%; aspect-ratio: 100 / 80; transform: translate(-50%, -100%) rotate(6deg); }
+.hat { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transform-origin: 50% 100%;
+  animation: hat-swap 12.5s cubic-bezier(.3, .7, .2, 1) infinite; filter: drop-shadow(0 6px 6px rgba(0,0,0,.12)); }
+.hat--2 { animation-delay: 2.5s; }
+.hat--3 { animation-delay: 5s; }
+.hat--4 { animation-delay: 7.5s; }
+.hat--5 { animation-delay: 10s; }
+/* Each hat drops on, settles, then gets tossed off as the next one lands */
+@keyframes hat-swap {
+  0%   { opacity: 0; transform: translateY(-80%) rotate(-14deg); }
+  4%   { opacity: 1; transform: translateY(0) rotate(0) scale(1.06, .9); }
+  6%   { transform: translateY(-6%) rotate(0) scale(.97, 1.04); }
+  8%   { transform: translateY(0) rotate(0) scale(1); }
+  12%  { transform: translateY(0) rotate(-3deg); }
+  16%  { opacity: 1; transform: translateY(0) rotate(2deg); }
+  20%  { opacity: 0; transform: translate(28%, -80%) rotate(28deg); }
+  100% { opacity: 0; transform: translate(28%, -80%) rotate(28deg); }
+}
+@keyframes otter-bob {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-6px) rotate(-1.5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hat--1 { opacity: 1 !important; transform: none !important; }
+}
+/* Tossed hats must not create sideways scrolling on phones */
+#who { overflow-x: clip; }
