@@ -1,0 +1,14 @@
+---
+// Newsletter signup shown at the end of every post. Uses the same Brevo form handling as the rest of the site.
+interface Props { id?: string }
+const { id = 'post-email' } = Astro.props;
+---
+<div class="inline-signup">
+  <p class="inline-signup__title">Get one of these in your inbox every week.</p>
+  <form class="signup" data-signup novalidate>
+    <label class="sr-only" for={id}>Your email</label>
+    <input id={id} type="email" name="email" placeholder="Your email" autocomplete="email" required>
+    <button type="submit" class="btn btn--dark">Send me the next experiment</button>
+    <p class="signup__msg" role="status" aria-live="polite"></p>
+  </form>
+</div>

@@ -1,0 +1,23 @@
+---
+import type { Post } from '../lib/posts';
+interface Props { post: Post; delay?: number }
+const { post, delay = 0 } = Astro.props;
+---
+<article class="post-card reveal" data-pillar={post.pillar} style={`--d:${delay}s`}>
+  <a class="post-card__link" href={`/blog/${post.slug}`}>
+    <div class="post-card__img">
+      {post.coverImage
+        ? <img src={post.coverImage} alt="" loading="lazy" width="1600" height="1000">
+        : <span class="post-card__ph" aria-hidden="true">{post.pillarLabel}</span>}
+    </div>
+    <div class="post-card__body">
+      <p class="exp__meta">
+        <span class={`tag tag--${post.pillar}`}>{post.pillarLabel}</span> · {post.minutes}-minute read
+        {post.draft && <span class="badge-draft">Draft</span>}
+      </p>
+      <h3 class="post-card__title">{post.title}</h3>
+      {post.summary && <p class="post-card__summary">{post.summary}</p>}
+      {post.dateLabel && <p class="post-card__date">{post.dateLabel}</p>}
+    </div>
+  </a>
+</article>
