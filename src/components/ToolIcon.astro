@@ -1,0 +1,16 @@
+---
+// Illustrated icon tiles for the free tools (brand colours, inline SVG).
+interface Props { name: 'quote' | 'prompts' | 'playbook' }
+const { name } = Astro.props;
+---
+<div class={`tool-icon tool-icon--${name}`} aria-hidden="true">
+  {name === 'quote' && (
+    <svg viewBox="0 0 120 120"><rect x="18" y="22" width="84" height="76" rx="12" fill="#fff" stroke="#121212" stroke-width="3"/><path d="M36 58c0-10 6-17 15-19l2 5c-5 2-8 6-8 10h8v14H36z M60 58c0-10 6-17 15-19l2 5c-5 2-8 6-8 10h8v14H60z" fill="#EE3D4C"/><rect x="34" y="78" width="40" height="5" rx="2.5" fill="#121212"/><rect x="34" y="87" width="26" height="4" rx="2" fill="#9aa4ad"/></svg>
+  )}
+  {name === 'prompts' && (
+    <svg viewBox="0 0 120 120"><path d="M20 30a10 10 0 0 1 10-10h50a10 10 0 0 1 10 10v30a10 10 0 0 1-10 10H48L32 84V70h-2a10 10 0 0 1-10-10z" fill="#121212"/><rect x="32" y="34" width="38" height="5" rx="2.5" fill="#fff"/><rect x="32" y="46" width="28" height="5" rx="2.5" fill="#fff" opacity=".6"/><path d="M50 62a10 10 0 0 1 10-10h40a10 10 0 0 1 10 10v20a10 10 0 0 1-10 10h-2v12L84 92H60a10 10 0 0 1-10-10z" fill="#fff" stroke="#121212" stroke-width="3"/><path d="M80 64l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#EE3D4C"/></svg>
+  )}
+  {name === 'playbook' && (
+    <svg viewBox="0 0 120 120"><path d="M24 30c12-6 24-6 36 2v62c-12-8-24-8-36-2z" fill="#fff" stroke="#121212" stroke-width="3" stroke-linejoin="round"/><path d="M96 30c-12-6-24-6-36 2v62c12-8 24-8 36-2z" fill="#EE3D4C" stroke="#121212" stroke-width="3" stroke-linejoin="round"/><path d="M32 44c7-2 14-1 20 2M32 54c7-2 14-1 20 2M32 64c7-2 14-1 20 2" stroke="#121212" stroke-width="3" stroke-linecap="round"/><path d="M68 46l6 6 12-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M68 66h18M68 76h12" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+  )}
+</div>

@@ -46,7 +46,17 @@ class SignupError extends Error {
   constructor(detail) { super(detail); this.detail = detail; }
 }
 
-async function resolveListId(env, apiKey) {
+// Which Brevo list a form adds to. The browser sends a name ("newsletter" or "freebies"),
+// never a list number, so visitors can't add themselves to other lists.
+function listKey(body) {
+  return body && body.list === 'freebies' ? 'freebies' : 'newsletter';
+}
+
+async function resolveListId(env, apiKey, key = 'newsletter') {
+  if (key === 'freebies') {
+    if (!env.BREVO_FREEBIES_LIST_ID) throw new SignupError('BREVO_FREEBIES_LIST_ID is not set');
+    return parseInt(env.BREVO_FREEBIES_LIST_ID, 10);
+  }
   if (env.BREVO_LIST_ID) return parseInt(env.BREVO_LIST_ID, 10);
   if (cachedListId) return cachedListId;
 
@@ -83,7 +93,7 @@ async function subscribe(request, env) {
   }
 
   try {
-    const listId = await resolveListId(env, apiKey);
+    const listId = await resolveListId(env, apiKey, listKey(body));
     // updateEnabled: if the contact already exists, add them to the list instead of failing.
     const res = await brevo("/contacts", apiKey, {
       method: "POST",
@@ -108,6 +118,7 @@ async function status(env) {
     keyPresent: !!apiKey,
     keyFormat: apiKey ? (apiKey.startsWith("xkeysib-") ? "ok" : "unexpected (should start with xkeysib-)") : null,
     listId: env.BREVO_LIST_ID || null,
+    freebiesListId: env.BREVO_FREEBIES_LIST_ID || null,
     // Names only, never values: shows which settings this Worker can actually see.
     visibleSettings: Object.keys(env).filter((k) => k !== "ASSETS").sort(),
   };
@@ -118,6 +129,10 @@ async function status(env) {
     if (env.BREVO_LIST_ID) {
       const l = await brevo(`/contacts/lists/${encodeURIComponent(env.BREVO_LIST_ID)}`, apiKey);
       out.brevoList = l.ok ? { status: l.status, name: (await l.json()).name } : { status: l.status, message: await brevoMessage(l) };
+    }
+    if (env.BREVO_FREEBIES_LIST_ID) {
+      const f = await brevo(`/contacts/lists/${encodeURIComponent(env.BREVO_FREEBIES_LIST_ID)}`, apiKey);
+      out.brevoFreebiesList = f.ok ? { status: f.status, name: (await f.json()).name } : { status: f.status, message: await brevoMessage(f) };
     }
   } catch (err) {
     out.error = "Could not reach Brevo";

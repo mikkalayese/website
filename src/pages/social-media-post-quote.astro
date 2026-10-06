@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Image quote template — Mikka"
+  description="Free image quote template: type a quote, pick your colours, download a ready-to-post image for Instagram, LinkedIn or Stories."
+  current="tools"
+>
+  <section class="blog-head">
+    <div class="container">
+      <p class="qt-back"><a href="/marketing-tools" class="link-arrow"><span aria-hidden="true">←</span> All free tools</a></p>
+      <p class="eyebrow reveal-up">Free tool</p>
+      <h1 class="blog-title reveal-up" style="--d:.1s">Image quote <em>template.</em></h1>
+      <p class="lead reveal-up" style="--d:.18s">Type your quote, pick your colours, download a ready-to-post image.</p>
+    </div>
+  </section>
+
+  <section class="section section--tint quote-tool-section">
+    <div class="container quote-tool" data-quote-tool>
+      <form class="qt-controls" onsubmit="return false">
+        <div class="qt-field">
+          <label for="qt-quote">Quote</label>
+          <textarea id="qt-quote" rows="5" maxlength="320">You don't need to know everything. You need to know how to *figure things out.*</textarea>
+          <p class="qt-hint">Wrap words in *asterisks* to make them handwritten.</p>
+        </div>
+        <div class="qt-row">
+          <div class="qt-field">
+            <label for="qt-author">Name</label>
+            <input id="qt-author" type="text" maxlength="60" value="Mikka Layese">
+          </div>
+          <div class="qt-field">
+            <label for="qt-handle">Handle or website</label>
+            <input id="qt-handle" type="text" maxlength="60" value="@mikkalayese">
+          </div>
+        </div>
+
+        <fieldset class="qt-field">
+          <legend>Size</legend>
+          <div class="qt-seg">
+            <label><input type="radio" name="qt-size" value="1080x1080" checked><span>Square<small>1080×1080</small></span></label>
+            <label><input type="radio" name="qt-size" value="1080x1350"><span>Portrait<small>1080×1350</small></span></label>
+            <label><input type="radio" name="qt-size" value="1080x1920"><span>Story<small>1080×1920</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="qt-field">
+          <legend>Alignment</legend>
+          <div class="qt-seg qt-seg--sm">
+            <label><input type="radio" name="qt-align" value="left" checked><span>Left</span></label>
+            <label><input type="radio" name="qt-align" value="center"><span>Centre</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="qt-field">
+          <legend>Colour themes</legend>
+          <div class="qt-themes">
+            <button type="button" class="qt-theme is-active" data-theme="#e8f1f8,#121212,#ee3d4c" aria-label="Ice"><span class="qt-swatches"><span style="background:#e8f1f8"></span><span style="background:#121212"></span><span style="background:#ee3d4c"></span></span>Ice</button>
+            <button type="button" class="qt-theme" data-theme="#ffffff,#121212,#ee3d4c" aria-label="White"><span class="qt-swatches"><span style="background:#ffffff"></span><span style="background:#121212"></span><span style="background:#ee3d4c"></span></span>White</button>
+            <button type="button" class="qt-theme" data-theme="#121212,#ffffff,#ee3d4c" aria-label="Ink"><span class="qt-swatches"><span style="background:#121212"></span><span style="background:#ffffff"></span><span style="background:#ee3d4c"></span></span>Ink</button>
+            <button type="button" class="qt-theme" data-theme="#ee3d4c,#ffffff,#121212" aria-label="Red"><span class="qt-swatches"><span style="background:#ee3d4c"></span><span style="background:#ffffff"></span><span style="background:#121212"></span></span>Red</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="qt-field">
+          <legend>Adjust colours</legend>
+          <div class="qt-colors">
+            <label><input type="color" id="qt-bg" value="#e8f1f8"><span>Background</span></label>
+            <label><input type="color" id="qt-text" value="#121212"><span>Text</span></label>
+            <label><input type="color" id="qt-accent" value="#ee3d4c"><span>Accent</span></label>
+          </div>
+        </fieldset>
+
+        <div class="qt-actions">
+          <button type="button" class="btn btn--accent" data-qt-download>Download PNG</button>
+          <button type="button" class="btn btn--ghost" data-qt-reset>Reset</button>
+        </div>
+      </form>
+
+      <div class="qt-preview">
+        <div class="qt-canvas-wrap"><canvas id="qt-canvas" width="1080" height="1080" aria-label="Quote image preview"></canvas></div>
+        <p class="qt-hint qt-size-label">Preview · <span data-qt-size-label>1080×1080 px</span></p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline src="/assets/quote-tool.js" defer></script>
+</Base>

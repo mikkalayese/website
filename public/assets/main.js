@@ -137,6 +137,88 @@ const NEWSLETTER_ENDPOINT = "/api/subscribe";
     });
   });
 
+  // Freebie pop-up (/marketing-tools): email required, adds to the Brevo freebies
+  // list, then opens the Google Doc. Opened by any [data-freebie="<doc url>"] button.
+  const modal = document.getElementById("freebie-modal");
+  if (modal) {
+    const form = modal.querySelector("[data-freebie-form]");
+    const input = form.querySelector('input[type="email"]');
+    const submit = form.querySelector('button[type="submit"]');
+    const msg = form.querySelector(".signup__msg");
+    const nameEl = modal.querySelector("[data-freebie-name]");
+    let docUrl = "";
+    let opener = null;
+
+    const hp = document.createElement("input");
+    hp.type = "text"; hp.name = "company"; hp.tabIndex = -1; hp.autocomplete = "off";
+    hp.setAttribute("aria-hidden", "true");
+    hp.style.cssText = "position:absolute;left:-9999px;width:1px;height:1px;opacity:0;";
+    form.appendChild(hp);
+
+    const valid = () => EMAIL_RE.test(input.value.trim());
+    const sync = () => { submit.disabled = !valid(); };
+
+    const open = (btn) => {
+      opener = btn;
+      docUrl = btn.dataset.freebie;
+      nameEl.textContent = btn.dataset.freebieTitle || "this freebie";
+      form.reset(); msg.textContent = ""; msg.classList.remove("is-error"); sync();
+      modal.hidden = false;
+      document.documentElement.classList.add("modal-open");
+      requestAnimationFrame(() => { modal.classList.add("is-open"); input.focus(); });
+    };
+    const close = () => {
+      modal.classList.remove("is-open");
+      document.documentElement.classList.remove("modal-open");
+      modal.hidden = true;
+      if (opener) opener.focus();
+    };
+
+    document.querySelectorAll("[data-freebie]").forEach((btn) => btn.addEventListener("click", () => open(btn)));
+    modal.querySelectorAll("[data-modal-close]").forEach((el) => el.addEventListener("click", close));
+    document.addEventListener("keydown", (e) => {
+      if (modal.hidden) return;
+      if (e.key === "Escape") close();
+      if (e.key === "Tab") { // keep focus inside the pop-up
+        const f = [...modal.querySelectorAll("button:not([disabled]), input:not([tabindex='-1'])")];
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    input.addEventListener("input", sync);
+
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      msg.classList.remove("is-error");
+      if (!valid()) {
+        msg.textContent = "Please enter your email to get the freebie.";
+        msg.classList.add("is-error");
+        input.focus();
+        return;
+      }
+      submit.disabled = true;
+      msg.textContent = "Subscribing…";
+      try {
+        const res = await fetch(NEWSLETTER_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: input.value.trim(), list: "freebies", company: hp.value }),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || "Something went wrong. Please try again.");
+        }
+        msg.textContent = "You're in! Opening your freebie…";
+        window.location.href = docUrl;
+      } catch (err) {
+        msg.textContent = err && err.message && !/fetch|network/i.test(err.message) ? err.message : "Something went wrong. Please try again.";
+        msg.classList.add("is-error");
+        sync();
+      }
+    });
+  }
+
   // Footer year
   document.querySelectorAll("[data-year]").forEach((el) => { el.textContent = new Date().getFullYear(); });
 })();

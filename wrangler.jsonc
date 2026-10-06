@@ -16,6 +16,8 @@
   "vars": {
     "BREVO_LIST_NAME": "newsletter sign ups",
     // Brevo list ID (Contacts > Lists). When set, the Worker skips the name lookup.
-    "BREVO_LIST_ID": "5"
+    "BREVO_LIST_ID": "5",
+    // Brevo list for the free tools & resources pop-up (/marketing-tools)
+    "BREVO_FREEBIES_LIST_ID": "6"
   }
 }
