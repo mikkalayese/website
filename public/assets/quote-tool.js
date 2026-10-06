@@ -29,6 +29,11 @@
   };
   const LOGO_FONT = { fam: "Inter Tight", w: 700, fb: "sans-serif" };
 
+  // Opening quote mark, drawn as a shape (not a font glyph) so it looks the same
+  // with every font and in both PNG and SVG. One mark is ~58 x 67 units; two sit side by side.
+  const MARK_D = "M0 47a19.5 19.5 0 1 1 39 0a19.5 19.5 0 1 1-39 0Z M0 47C0 24 20 7 56 0C40 9 34.5 21 34.4 34.5L19.5 47Z";
+  const MARK_GAP = 64, MARK_W = 122, MARK_H = 67;
+
   let logo = null; // { img, src } when a custom logo is uploaded
 
   const val = (name) => root.querySelector(`input[name="${name}"]:checked`).value;
@@ -58,10 +63,12 @@
     const ops = [{ t: "rect", x: 0, y: 0, w: W, h: H, fill: bg }];
     const text = (s, x, y, f, size, fill, anchor = "start", alpha = 1) => ops.push({ t: "text", s, x, y, f, size, fill, anchor, alpha });
 
-    // Opening quote mark in the secondary font
-    const markSize = Math.round(W * 0.24 * (A.scale / 1.28));
-    const markY = pad + W * 0.15;
-    text("“", centred ? W / 2 : pad - W * 0.01, markY, A, markSize, accent, centred ? "middle" : "start");
+    // Opening quote mark: two bold drawn shapes
+    const markScale = (W * 0.19) / MARK_W;
+    const markTop = pad * 0.9;
+    const markX = centred ? (W - W * 0.19) / 2 : pad - W * 0.005;
+    [0, MARK_GAP].forEach((dx) => ops.push({ t: "path", d: MARK_D, x: markX + dx * markScale, y: markTop, k: markScale, fill: accent }));
+    const markBottom = markTop + MARK_H * markScale;
 
     // Footer block sizes (logo sits under the name in centred layouts)
     const nameSize = Math.round(W * 0.036), handleSize = Math.round(W * 0.028);
@@ -70,7 +77,7 @@
 
     // Quote: largest size whose wrapped block fits the space
     const toks = tokens(els.quote.value.trim() || " ");
-    const top = markY + W * 0.02;
+    const top = markBottom + W * 0.05;
     const availH = H - top - W * 0.26 - footerShift - pad * 0.4; // keeps clear of the accent rule
     let size = Math.round(W * 0.085), lines = [], space = 0, lh = 0;
     for (; size > 26; size -= 2) {
@@ -134,6 +141,9 @@
         ctx.font = css(o.f, o.size); ctx.fillStyle = o.fill;
         ctx.textAlign = o.anchor === "middle" ? "center" : o.anchor === "end" ? "right" : "left";
         ctx.fillText(o.s, o.x, o.y);
+      } else if (o.t === "path") {
+        ctx.save(); ctx.translate(o.x, o.y); ctx.scale(o.k, o.k);
+        ctx.fillStyle = o.fill; ctx.fill(new Path2D(o.d)); ctx.restore();
       } else if (o.t === "image") ctx.drawImage(o.img, o.x, o.y, o.w, o.h);
     }
     ctx.globalAlpha = 1;
@@ -181,6 +191,7 @@
     for (const o of S.ops) {
       if (o.t === "rect") out.push(`<rect x="${r(o.x)}" y="${r(o.y)}" width="${r(o.w)}" height="${r(o.h)}" fill="${o.fill}"/>`);
       else if (o.t === "text") out.push(`<text x="${r(o.x)}" y="${r(o.y)}" font-family="'${esc(o.f.fam)}', ${o.f.fb}" font-weight="${o.f.w}" font-size="${o.size}" fill="${o.fill}"${o.anchor !== "start" ? ` text-anchor="${o.anchor}"` : ""}${o.alpha !== 1 ? ` fill-opacity="${o.alpha}"` : ""} xml:space="preserve">${esc(o.s)}</text>`);
+      else if (o.t === "path") out.push(`<path d="${o.d}" transform="translate(${r(o.x)} ${r(o.y)}) scale(${r(o.k * 1000) / 1000})" fill="${o.fill}"/>`);
       else if (o.t === "image") out.push(`<image x="${r(o.x)}" y="${r(o.y)}" width="${r(o.w)}" height="${r(o.h)}" href="${o.src}" xlink:href="${o.src}" preserveAspectRatio="xMidYMid meet"/>`);
     }
     out.push("</svg>");
