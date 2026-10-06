@@ -44,6 +44,8 @@ Cloudflare's Workers Builds ignores the `build.command` in `wrangler.jsonc`, so 
 
 `npm install` therefore also builds the site locally; that is expected. If the build complains about the Node version, add the build variable `NODE_VERSION` = `22` (Workers & Pages → **marketing** → Settings → Build).
 
+If a merge to `main` doesn't deploy (no new build in Workers & Pages -> marketing -> Deployments -> View build history after a couple of minutes), retry it there with **Retry build**, or push any small change to `main` to start a fresh build.
+
 ## Brevo signups
 All signup forms post to `/api/subscribe` (`src/worker.js`), which adds the email to the Brevo list **"newsletter sign ups"** (ID 5). Existing contacts are updated and added to the list.
 
