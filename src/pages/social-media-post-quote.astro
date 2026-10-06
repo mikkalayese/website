@@ -1,11 +1,17 @@
 ---
 import Base from '../layouts/Base.astro';
+
+// Font choices for the quote image (all Google Fonts, loaded only on this page).
+const MAIN_FONTS = ['Inter Tight', 'Poppins', 'Montserrat', 'Playfair Display', 'Lora'];
+const ACCENT_FONTS = ['Caveat', 'Dancing Script', 'Pacifico', 'Permanent Marker', 'Shadows Into Light'];
+const fontsHref = 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Montserrat:wght@500;600&family=Playfair+Display:wght@500;600&family=Lora:wght@500;600&family=Dancing+Script:wght@600&family=Pacifico&family=Permanent+Marker&family=Shadows+Into+Light&display=swap';
 ---
 <Base
   title="Image quote template — Mikka"
   description="Free image quote template: type a quote, pick your colours, download a ready-to-post image for Instagram, LinkedIn or Stories."
   current="tools"
 >
+  <link slot="head" rel="stylesheet" href={fontsHref}>
   <section class="blog-head">
     <div class="container">
       <p class="qt-back"><a href="/marketing-tools" class="link-arrow"><span aria-hidden="true">←</span> All free tools</a></p>
@@ -33,6 +39,22 @@ import Base from '../layouts/Base.astro';
             <input id="qt-handle" type="text" maxlength="60" value="@mikkalayese">
           </div>
         </div>
+
+        <div class="qt-row">
+          <div class="qt-field">
+            <label for="qt-font-main">Main font</label>
+            <select id="qt-font-main">
+              {MAIN_FONTS.map((f) => <option value={f} style={`font-family:'${f}'`}>{f}</option>)}
+            </select>
+          </div>
+          <div class="qt-field">
+            <label for="qt-font-accent">Secondary font</label>
+            <select id="qt-font-accent">
+              {ACCENT_FONTS.map((f) => <option value={f} style={`font-family:'${f}'`}>{f}</option>)}
+            </select>
+          </div>
+        </div>
+        <p class="qt-hint qt-hint--tight">The secondary font is used for the quote mark and the *highlighted* words.</p>
 
         <fieldset class="qt-field">
           <legend>Size</legend>
@@ -70,10 +92,24 @@ import Base from '../layouts/Base.astro';
           </div>
         </fieldset>
 
+        <fieldset class="qt-field">
+          <legend>Logo</legend>
+          <div class="qt-logo">
+            <div class="qt-logo__preview" data-qt-logo-preview><span class="qt-logo__default">mikka<b>.</b></span></div>
+            <div class="qt-logo__buttons">
+              <label class="btn btn--ghost btn--sm qt-logo__upload">Upload logo<input type="file" id="qt-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml"></label>
+              <button type="button" class="qt-logo__remove link-underline" data-qt-logo-remove hidden>Use default logo</button>
+            </div>
+          </div>
+          <p class="qt-hint">PNG or SVG with a transparent background works best. Your logo stays on your device; nothing is uploaded to a server.</p>
+        </fieldset>
+
         <div class="qt-actions">
-          <button type="button" class="btn btn--accent" data-qt-download>Download PNG</button>
+          <button type="button" class="btn btn--accent" data-qt-download="png">Download PNG</button>
+          <button type="button" class="btn btn--dark" data-qt-download="svg">Download SVG</button>
           <button type="button" class="btn btn--ghost" data-qt-reset>Reset</button>
         </div>
+        <p class="qt-hint" data-qt-status role="status" aria-live="polite"></p>
       </form>
 
       <div class="qt-preview">
