@@ -1,0 +1,20 @@
+---
+// Email gate for the downloadable freebies. Opened by any [data-freebie] button (see main.js).
+---
+<div class="modal" id="freebie-modal" hidden>
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="freebie-title">
+    <button type="button" class="modal__close" data-modal-close aria-label="Close">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <p class="eyebrow">Free download</p>
+    <h2 class="modal__title" id="freebie-title">Get <em data-freebie-name>this freebie</em></h2>
+    <p class="modal__text">Subscribe and it's yours. You'll also get one experiment a week. Unsubscribe anytime.</p>
+    <form class="modal__form" data-freebie-form novalidate>
+      <label class="modal__label" for="freebie-email">Your email <span aria-hidden="true">*</span></label>
+      <input id="freebie-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      <button type="submit" class="btn btn--accent modal__submit" disabled>Subscribe &amp; get the freebie</button>
+      <p class="signup__msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>

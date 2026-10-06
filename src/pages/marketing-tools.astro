@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import ToolIcon from '../components/ToolIcon.astro';
+import FreebieModal from '../components/FreebieModal.astro';
+import { TOOLS } from '../data/tools';
+---
+<Base
+  title="Free tools & resources — Mikka"
+  description="Free marketing tools: an image quote template, master prompts for social media and my marketing playbook."
+  current="tools"
+>
+  <section class="tools-page">
+    <div class="container">
+      <div class="tools-page__head">
+        <p class="eyebrow reveal-up">Free tools &amp; resources</p>
+        <h1 class="blog-title reveal-up" style="--d:.1s">Steal my <em>marketing tools.</em></h1>
+        <p class="lead reveal-up" style="--d:.18s">The templates, prompts and playbook I actually use. Free to take, adapt and make your own.</p>
+      </div>
+      <div class="tool-grid">
+        {TOOLS.map((tool, i) => {
+          const body = (
+            <>
+              <ToolIcon name={tool.icon} />
+              <span class="tool-card__n">{String(i + 1).padStart(2, '0')}</span>
+              <h2 class="tool-card__title">{tool.title}</h2>
+              <p class="tool-card__desc">{tool.description}</p>
+              <span class="tool-card__action">
+                {tool.kind === 'freebie' && <span class="tool-card__badge">Free download</span>}
+                {tool.action} <span aria-hidden="true">→</span>
+              </span>
+            </>
+          );
+          return tool.kind === 'page'
+            ? <a class="tool-card reveal" href={tool.href} style={`--d:${i * 0.08}s`}>{body}</a>
+            : <button type="button" class="tool-card reveal" style={`--d:${i * 0.08}s`}
+                data-freebie={tool.href} data-freebie-title={tool.title}>{body}</button>;
+        })}
+      </div>
+    </div>
+  </section>
+
+  <FreebieModal />
+</Base>
