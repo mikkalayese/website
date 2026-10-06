@@ -31,9 +31,12 @@
   const LOGO_FONT = { fam: "Inter Tight", w: 700, fb: "sans-serif" };
 
   // Opening quote mark, drawn as a shape (not a font glyph) so it looks the same
-  // with every font and in both PNG and SVG. One mark is ~58 x 67 units; two sit side by side.
-  const MARK_D = "M1 49a27 27 0 1 1 54 0a27 27 0 1 1-54 0Z M1 49C0 27 19 10 44 1.5C49.5 -0.5 55 4 51.5 8.5C40 16.5 33.5 25 35.5 35L28 49Z";
-  const MARK_GAP = 64, MARK_W = 120, MARK_H = 76;
+  // with every font and in both PNG and SVG. Each "6" is a round dot with a short
+  // curled tail (~52 x 54 units); two sit side by side.
+  const MARK_D = "M1 38a24 24 0 1 1 48 0a24 24 0 1 1-48 0Z M1 38C1 21 13 8 33 2C38 0.5 41 5 37.5 8C30 13.5 26.5 19 27 26L25 38Z";
+  const MARK_GAP = 58, MARK_W = 107, MARK_H = 62;
+  // Largest quote font size for each text size option (as a share of image width)
+  const TEXT_SIZES = { s: 0.054, m: 0.068, l: 0.085 };
 
   let logo = null; // { img, src } when a custom logo is uploaded
 
@@ -64,26 +67,18 @@
     const ops = [{ t: "rect", x: 0, y: 0, w: W, h: H, fill: bg }];
     const text = (s, x, y, f, size, fill, anchor = "start", alpha = 1) => ops.push({ t: "text", s, x, y, f, size, fill, anchor, alpha });
 
-    // Opening quote mark: two bold drawn shapes (optional)
-    const markScale = (W * 0.19) / MARK_W;
-    const markTop = pad * 0.9;
-    const markX = centred ? (W - W * 0.19) / 2 : pad - W * 0.005;
-    let markBottom = markTop - W * 0.03; // when hidden, the quote starts where the mark would have
-    if (showMark.checked) {
-      [0, MARK_GAP].forEach((dx) => ops.push({ t: "path", d: MARK_D, x: markX + dx * markScale, y: markTop, k: markScale, fill: accent }));
-      markBottom = markTop + MARK_H * markScale;
-    }
-
     // Footer block sizes (logo sits under the name in centred layouts)
     const nameSize = Math.round(W * 0.036), handleSize = Math.round(W * 0.028);
     const logoBoxH = W * 0.06, logoGap = W * 0.04;
     const footerShift = centred && showLogo.checked ? logoBoxH + logoGap : 0;
 
-    // Quote: largest size whose wrapped block fits the space
+    // Quote: largest size (up to the chosen text size) whose mark + wrapped text fits the space.
+    // The quote mark is sized from the text (about cap height) and sits just above it.
     const toks = tokens(els.quote.value.trim() || " ");
-    const top = markBottom + W * 0.05;
+    const markH = (size) => (showMark.checked ? size * 0.62 + size * 0.42 : 0); // mark + gap
+    const top = pad;
     const availH = H - top - W * 0.26 - footerShift - pad * 0.4; // keeps clear of the accent rule
-    let size = Math.round(W * 0.085), lines = [], space = 0, lh = 0;
+    let size = Math.round(W * TEXT_SIZES[val("qt-textsize")]), lines = [], space = 0, lh = 0;
     for (; size > 26; size -= 2) {
       space = measure(M, size, " "); lh = size * 1.18; lines = [];
       let line = [], width = 0;
@@ -96,9 +91,16 @@
         line.push({ ...t, f, fs, width: w }); width += line.length > 1 ? space + w : w;
       }
       if (line.length) lines.push({ items: line, width });
-      if (lines.length * lh <= availH) break;
+      if (markH(size) + lines.length * lh <= availH) break;
     }
-    let y = top + Math.max(0, (availH - lines.length * lh) / 2) + size;
+    const blockH = markH(size) + lines.length * lh;
+    let y = top + Math.max(0, (availH - blockH) / 2);
+    if (showMark.checked) {
+      const k = (size * 0.62) / MARK_H;
+      const mx = centred ? (W - MARK_W * k) / 2 : pad + size * 0.02;
+      [0, MARK_GAP].forEach((dx) => ops.push({ t: "path", d: MARK_D, x: mx + dx * k, y, k, fill: accent }));
+    }
+    y += markH(size) + size * 0.86; // first baseline (lines are 1.18 x size; cap tops sit ~0.14 below)
     for (const line of lines) {
       let x = centred ? (W - line.width) / 2 : pad;
       line.items.forEach((t, i) => {
@@ -279,6 +281,7 @@
     Object.entries(DEFAULTS).forEach(([k, v]) => { els[k].value = v; });
     root.querySelector('input[name="qt-size"][value="1080x1080"]').checked = true;
     root.querySelector('input[name="qt-align"][value="left"]').checked = true;
+    root.querySelector('input[name="qt-textsize"][value="m"]').checked = true;
     themes.forEach((t, i) => t.classList.toggle("is-active", i === 0));
     showMark.checked = true; showLogo.checked = true;
     clearLogo(); status.textContent = "";
