@@ -712,3 +712,7 @@ html.modal-open { overflow: hidden; }
 .qt-logo__remove { background: none; border: 0; padding: 0; font: inherit; font-size: 14px; font-weight: 600; color: var(--ink); cursor: pointer; }
 .qt-actions .btn { flex: 1 1 auto; }
 [data-qt-status]:empty { display: none; }
+/* Quote tool: show/hide toggles */
+.qt-check { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; cursor: pointer; width: fit-content; }
+.qt-check input { width: 20px; height: 20px; accent-color: var(--accent); cursor: pointer; margin: 0; }
+.qt-check input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }

@@ -12,6 +12,7 @@
     bg: $("#qt-bg"), text: $("#qt-text"), accent: $("#qt-accent"),
     fontMain: $("#qt-font-main"), fontAccent: $("#qt-font-accent"),
   };
+  const showMark = $("#qt-show-mark"), showLogo = $("#qt-show-logo");
   const DEFAULTS = Object.fromEntries(Object.entries(els).map(([k, el]) => [k, el.value]));
   const status = $("[data-qt-status]");
 
@@ -31,8 +32,8 @@
 
   // Opening quote mark, drawn as a shape (not a font glyph) so it looks the same
   // with every font and in both PNG and SVG. One mark is ~58 x 67 units; two sit side by side.
-  const MARK_D = "M0 47a19.5 19.5 0 1 1 39 0a19.5 19.5 0 1 1-39 0Z M0 47C0 24 20 7 56 0C40 9 34.5 21 34.4 34.5L19.5 47Z";
-  const MARK_GAP = 64, MARK_W = 122, MARK_H = 67;
+  const MARK_D = "M1 49a27 27 0 1 1 54 0a27 27 0 1 1-54 0Z M1 49C0 27 19 10 44 1.5C49.5 -0.5 55 4 51.5 8.5C40 16.5 33.5 25 35.5 35L28 49Z";
+  const MARK_GAP = 64, MARK_W = 120, MARK_H = 76;
 
   let logo = null; // { img, src } when a custom logo is uploaded
 
@@ -63,17 +64,20 @@
     const ops = [{ t: "rect", x: 0, y: 0, w: W, h: H, fill: bg }];
     const text = (s, x, y, f, size, fill, anchor = "start", alpha = 1) => ops.push({ t: "text", s, x, y, f, size, fill, anchor, alpha });
 
-    // Opening quote mark: two bold drawn shapes
+    // Opening quote mark: two bold drawn shapes (optional)
     const markScale = (W * 0.19) / MARK_W;
     const markTop = pad * 0.9;
     const markX = centred ? (W - W * 0.19) / 2 : pad - W * 0.005;
-    [0, MARK_GAP].forEach((dx) => ops.push({ t: "path", d: MARK_D, x: markX + dx * markScale, y: markTop, k: markScale, fill: accent }));
-    const markBottom = markTop + MARK_H * markScale;
+    let markBottom = markTop - W * 0.03; // when hidden, the quote starts where the mark would have
+    if (showMark.checked) {
+      [0, MARK_GAP].forEach((dx) => ops.push({ t: "path", d: MARK_D, x: markX + dx * markScale, y: markTop, k: markScale, fill: accent }));
+      markBottom = markTop + MARK_H * markScale;
+    }
 
     // Footer block sizes (logo sits under the name in centred layouts)
     const nameSize = Math.round(W * 0.036), handleSize = Math.round(W * 0.028);
     const logoBoxH = W * 0.06, logoGap = W * 0.04;
-    const footerShift = centred ? logoBoxH + logoGap : 0;
+    const footerShift = centred && showLogo.checked ? logoBoxH + logoGap : 0;
 
     // Quote: largest size whose wrapped block fits the space
     const toks = tokens(els.quote.value.trim() || " ");
@@ -114,7 +118,7 @@
 
     // Logo: bottom-right (left layout) or bottom-centre (centred layout)
     const baseY = centred ? H - pad * 0.7 : fy + W * 0.045;
-    if (logo) {
+    if (!showLogo.checked) { /* logo hidden */ } else if (logo) {
       const maxH = logoBoxH, maxLW = W * 0.28;
       const k = Math.min(maxH / logo.img.naturalHeight, maxLW / logo.img.naturalWidth);
       const lw = logo.img.naturalWidth * k, lhh = logo.img.naturalHeight * k;
@@ -236,7 +240,7 @@
     reader.onload = () => {
       const img = new Image();
       img.onload = () => {
-        logo = { img, src: reader.result };
+        logo = { img, src: reader.result }; showLogo.checked = true;
         logoPreview.innerHTML = "";
         const thumb = img.cloneNode(); thumb.alt = "Your logo"; logoPreview.appendChild(thumb);
         logoRemove.hidden = false; status.textContent = ""; draw();
@@ -261,6 +265,7 @@
     themes.forEach((t) => t.classList.remove("is-active")); draw();
   }));
   [els.quote, els.author, els.handle].forEach((i) => i.addEventListener("input", draw));
+  [showMark, showLogo].forEach((c) => c.addEventListener("change", draw));
   root.querySelectorAll('input[type="radio"]').forEach((i) => i.addEventListener("change", draw));
   [els.fontMain, els.fontAccent].forEach((sel) => sel.addEventListener("change", async () => {
     const f = sel === els.fontMain ? mainFont() : accentFont();
@@ -275,6 +280,7 @@
     root.querySelector('input[name="qt-size"][value="1080x1080"]').checked = true;
     root.querySelector('input[name="qt-align"][value="left"]').checked = true;
     themes.forEach((t, i) => t.classList.toggle("is-active", i === 0));
+    showMark.checked = true; showLogo.checked = true;
     clearLogo(); status.textContent = "";
     draw();
   });

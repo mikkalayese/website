@@ -73,6 +73,10 @@ const fontsHref = 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600
           </div>
         </fieldset>
 
+        <div class="qt-field">
+          <label class="qt-check"><input type="checkbox" id="qt-show-mark" checked><span>Show quote mark</span></label>
+        </div>
+
         <fieldset class="qt-field">
           <legend>Colour themes</legend>
           <div class="qt-themes">
@@ -94,6 +98,7 @@ const fontsHref = 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600
 
         <fieldset class="qt-field">
           <legend>Logo</legend>
+          <label class="qt-check"><input type="checkbox" id="qt-show-logo" checked><span>Show logo</span></label>
           <div class="qt-logo">
             <div class="qt-logo__preview" data-qt-logo-preview><span class="qt-logo__default">mikka<b>.</b></span></div>
             <div class="qt-logo__buttons">
@@ -101,7 +106,7 @@ const fontsHref = 'https://fonts.googleapis.com/css2?family=Poppins:wght@500;600
               <button type="button" class="qt-logo__remove link-underline" data-qt-logo-remove hidden>Use default logo</button>
             </div>
           </div>
-          <p class="qt-hint">PNG or SVG with a transparent background works best. Your logo stays on your device; nothing is uploaded to a server.</p>
+          <p class="qt-hint">Untick "Show logo" to remove it from the image. PNG or SVG with a transparent background works best, and your logo stays on your device.</p>
         </fieldset>
 
         <div class="qt-actions">
